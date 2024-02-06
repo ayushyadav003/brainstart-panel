@@ -1,0 +1,38 @@
+.studentsContainer {
+  .header {
+    padding: 10px 20px;
+    // width: 100%;
+    border-bottom: 1px solid #dcdcdc;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    input {
+      border-radius: 10px;
+      padding: 12px;
+      color: #000;
+      border: none;
+      font-size: 15px;
+    }
+    div {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .studentWrapper {
+    padding: 20px;
+    overflow: auto;
+    height: 80vh;
+  }
+  .popupBox {
+    width: 40vw;
+    display: flex;
+    background-color: red;
+    gap: 1rem;
+    padding: 30px;
+    justify-content: center;
+    align-items: center;
+  }
+}

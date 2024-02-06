@@ -1,0 +1,49 @@
+.dashboardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  justify-content: center;
+  color: #000;
+  gap: 1.5rem;
+  .plusIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dcdcdc;
+    width: 200px;
+    font-size: 3em;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .addCard {
+    border: 1px solid #dcdcdc;
+    color: #000;
+  }
+  .cardsWrapper {
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #fff;
+    width: 200px;
+    padding: 20px 20px;
+    .mainTitle {
+      font-size: 1.8em;
+      font-weight: 600;
+      margin: 0 0 10px 0;
+    }
+    .innerInfo {
+      display: flex;
+      justify-content: space-between;
+      .title {
+        font-size: 1em;
+        font-weight: 500;
+      }
+      .titleInfo {
+        margin: 0 0 0 10px;
+      }
+    }
+  }
+  .cardsWrapper:hover {
+    transform: scale(1.1);
+  }
+}
