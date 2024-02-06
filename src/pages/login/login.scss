@@ -1,0 +1,13 @@
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  form {
+    width: 420px;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+}
