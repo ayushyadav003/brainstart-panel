@@ -1,19 +1,19 @@
-.loginContainer {
-  display: flex;
-  height: 100vh;
-  display: flex;
-  .inner {
-    background-color: aliceblue;
-    width: 60%;
-    height: 100%;
+.formWrapper {
+  padding: 1rem 2rem;
+  width: 40%;
+  height: 100%;
+  form {
+    display: grid;
+    gap: 2rem;
+    button {
+      background: purple;
+    }
   }
-  .inner2 {
-    width: 40%;
-    padding: 1rem 2rem;
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+  a {
+    all: unset;
+    cursor: pointer;
+    p {
+      margin-top: 10%;
     }
   }
 }

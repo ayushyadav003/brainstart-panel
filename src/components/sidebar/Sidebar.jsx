@@ -30,9 +30,9 @@ function Sidebar() {
   console.log('pathname')
 
   return (
-    <div className={'sidebarContainer'}>
-      <div className={'dp'}></div>
-      <div className={sidebarOptions}>
+    <div className="sidebarContainer">
+      <div className="dp"></div>
+      <div className="sidebarOptions">
         {sidebarOptions.map((option, i) => {
           return (
             <Link href={option.link} key={i}>
@@ -45,8 +45,8 @@ function Sidebar() {
                       : 'lightgray',
                 }}
               >
-                <span>{'icon'}</span>
-                <p>{'title'}</p>
+                <span>{option.icon}</span>
+                <p>{option.title}</p>
               </div>
             </Link>
           )

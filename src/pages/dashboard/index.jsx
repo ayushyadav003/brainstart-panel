@@ -1,10 +1,10 @@
-import "./dashboard.module.scss";
+import './dashboard.scss'
 
 const classes = [
-  { title: "10th", totalStudents: "20", batches: "4", bg: "#7a6038" },
-  { title: "11th", totalStudents: "20", batches: "4", bg: "#7e4b34" },
-  { title: "12th", totalStudents: "20", batches: "4", bg: "#ce796b" },
-];
+  { title: '10th', totalStudents: '20', batches: '4', bg: '#7a6038' },
+  { title: '11th', totalStudents: '20', batches: '4', bg: '#7e4b34' },
+  { title: '12th', totalStudents: '20', batches: '4', bg: '#ce796b' },
+]
 
 function Dashboard() {
   return (
@@ -31,7 +31,7 @@ function Dashboard() {
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

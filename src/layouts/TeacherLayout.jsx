@@ -1,7 +1,8 @@
-import Sidebar from '../../components/sidebar/Sidebar'
-import '../layout.scss'
+import Sidebar from '../components/sidebar/Sidebar'
+import './layout.scss'
 
-export default function TeacherLayout(children) {
+// eslint-disable-next-line react/prop-types
+export default function TeacherLayout({ children }) {
   return (
     <div className="dashboardLayout">
       <div className="dashboard">
