@@ -1,10 +1,9 @@
-'use client'
-import React, { useState } from 'react'
-import styles from '../classes.module.scss'
+import { useState } from 'react'
+import '../classes.scss'
 import AddPopup from '../../../../components/addPopup/AddPopup'
 import { KeyboardDoubleArrowRight, School } from '@mui/icons-material'
-import { Divider } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { useNavigate } from 'react-router-dom'
+// import { Divider } from '@mui/material'
 
 const classes = [
   { title: '1st', totalStudents: '20', batches: '04', bg: '#ce796b' },
@@ -25,15 +24,15 @@ function Batches() {
   const [addClass, setAddClass] = useState(false)
   const [selectedClass, setSelectedClass] = useState('12th')
   const [currentScreen, setCurrentScreen] = useState('classes')
-  const router = useRouter()
+  const router = useNavigate
 
   return (
-    <div className={styles.classContainer}>
-      <div className={styles.cardsWrapper}>
+    <div className="classContainer">
+      <div className="cardsWrapper">
         {classes.map((classInfo, i) => (
           <div
             key={i}
-            className={styles.cardWrapper}
+            className="cardWrapper"
             style={{
               color: classInfo.bg,
             }}
