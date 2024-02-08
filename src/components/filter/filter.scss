@@ -1,0 +1,23 @@
+.filterContainer {
+  padding: 12px 2rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #dcdcdc;
+  .heading {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    h1 {
+      margin: 0;
+      font-size: 1.6em;
+    }
+  }
+  .filter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .dropDown {
+      width: 140px;
+    }
+  }
+}
