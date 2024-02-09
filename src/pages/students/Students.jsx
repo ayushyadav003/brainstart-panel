@@ -1,68 +1,57 @@
-import { useState } from 'react'
-// import CommonTable from '../../../components/common/Table'
-import './students.module.scss'
-import {
-  Autocomplete,
-  Button,
-  Dialog,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material'
-import AddPopup from '@/components/addPopup/AddPopup'
-import { useRouter } from 'next/navigation'
-import { Search } from '@mui/icons-material'
-import { ApiWithToken } from '../../../services/ApiWithToken'
-import { apiConfig } from '../../../services/ApiConfig'
+import { useState } from "react";
+import { Button } from "@mui/material";
+import { ApiWithOutToken } from "../../services/ApiWithoutToken";
+import { apiConfig } from "../../services/ApiConfig";
+import AddPopup from "../../components/addPopup/AddPopup";
+import Filter from "../../components/filter/Filter";
+import CommonTable from "../../components/table/Table";
+import "./students.scss";
 
 const studentData = [
   {
     id: 5,
-    name: 'Ayush4',
-    phone: '9958109872',
-    class: '12th',
-    batch: '04:00-05:00',
+    name: "Ayush4",
+    phone: "9958109872",
+    class: "12th",
+    batch: "04:00-05:00",
   },
   {
     id: 5,
-    name: 'Ayush4',
-    phone: '9958109872',
-    class: '12th',
-    batch: '04:00-05:00',
+    name: "Ayush4",
+    phone: "9958109872",
+    class: "12th",
+    batch: "04:00-05:00",
   },
   {
     id: 5,
-    name: 'Ayush4',
-    phone: '9958109872',
-    class: '12th',
-    batch: '04:00-05:00',
+    name: "Ayush4",
+    phone: "9958109872",
+    class: "12th",
+    batch: "04:00-05:00",
   },
-]
+];
 export default function Student() {
-  const [addStudent, setAddStudent] = useState(false)
+  const [addStudent, setAddStudent] = useState(false);
+  const [filter, setFilter] = useState({ search: "", class: "", batch: "" });
   const [newStudent, setNewStudent] = useState({
-    firstname: '',
-    lastname: '',
-    phone: '',
-    email: '',
-    class: '',
-    batch: '',
-  })
-  const router = useRouter()
+    firstname: "",
+    lastname: "",
+    phone: "",
+    email: "",
+    class: "",
+    batch: "",
+  });
 
-  const header = ['Sno.', 'Name', 'Phone', 'Class', 'Batch']
+  const header = ["Sno.", "Name", "Phone", "Class", "Batch"];
 
   const addNewStudent = async () => {
     const apiOptions = {
-      method: 'POST',
+      method: "POST",
       url: apiConfig?.student,
       data: newStudent,
-    }
-    const data = await ApiWithToken()
-  }
+    };
+    const data = await ApiWithOutToken();
+  };
 
   return (
     <div className="studentsContainer">
@@ -74,65 +63,21 @@ export default function Student() {
         values={newStudent}
         action
       />
-      <div className="header">
-        <h1>Students</h1>
-        <div>
-          <TextField
-            placeholder="name / email / phone"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <FormControl sx={{ minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small-label">Class</InputLabel>
-            <Select
-              labelId="demo-select-small-label"
-              id="demo-select-small"
-              value={''}
-              label="Class"
-              // onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>10th</MenuItem>
-              <MenuItem value={20}>11th</MenuItem>
-              <MenuItem value={30}>12th</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl sx={{ minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small-label">Batch</InputLabel>
-            <Select
-              labelId="demo-select-small-label"
-              id="demo-select-small"
-              value={''}
-              label="Batch"
-              // onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>04:00-05:00</MenuItem>
-              <MenuItem value={20}>05:00-06:00</MenuItem>
-              <MenuItem value={30}>06:00-07:00</MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            variant="contained"
-            // style={{ marginLeft: 'auto' }}
-            onClick={() => setAddStudent(true)}
-          >
-            New student
-          </Button>
-        </div>
+      <Filter
+        showBack={false}
+        heading="All Students"
+        type="student"
+        showClass={true}
+        showBatch={true}
+        filter={filter}
+        setFilter={setFilter}
+      />
+      <div id="addStudent">
+        <Button variant="contained">Add New Student</Button>
       </div>
       <div className="studentWrapper">
-        {/* <CommonTable head={header} rows={studentData} type="students" /> */}
+        <CommonTable head={header} rows={studentData} type="students" />
       </div>
     </div>
-  )
+  );
 }

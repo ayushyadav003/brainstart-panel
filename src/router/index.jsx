@@ -5,6 +5,7 @@ import TeacherLayout from "../layouts/TeacherLayout";
 import Dashboard from "../pages/dashboard";
 import Classes from "../pages/[sid]/classes/Classes";
 import Batches from "../pages/[sid]/classes/batches/Batches";
+import Student from "../pages/students/Students";
 
 export default function Router() {
   return (
@@ -36,6 +37,22 @@ export default function Router() {
         />
         <Route
           path="/classes/:id/batches"
+          element={
+            <TeacherLayout>
+              <Batches />
+            </TeacherLayout>
+          }
+        />
+        <Route
+          path="/students"
+          element={
+            <TeacherLayout>
+              <Student />
+            </TeacherLayout>
+          }
+        />
+        <Route
+          path="/students/:id"
           element={
             <TeacherLayout>
               <Batches />

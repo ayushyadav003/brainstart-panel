@@ -9,6 +9,11 @@
   overflow: hidden;
   .field {
   }
+  .timeWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
   .submitBtn {
     width: fit-content;
     padding: 10px 50px;

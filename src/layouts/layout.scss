@@ -24,3 +24,21 @@
     height: 100%;
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .dashboardLayout {
+    background: #202020;
+    height: 100vh;
+    .dashboard {
+      display: flex;
+      .dashboardBody {
+        background-color: #fff;
+        border-radius: 30px;
+        width: 85%;
+        height: 96vh;
+        overflow: hidden;
+        margin: 2vh 1% 0 auto;
+      }
+    }
+  }
+}
