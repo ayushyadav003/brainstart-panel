@@ -1,65 +1,70 @@
-import { useState } from "react";
-import "../classes.scss";
-import AddPopup from "../../../../components/addPopup/AddPopup";
-import { KeyboardDoubleArrowRight, School } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import Filter from "../../../../components/filter/Filter";
+import { useState } from 'react'
+import '../classes.scss'
+import AddPopup from '../../../../components/addPopup/AddPopup'
+import { Add, KeyboardDoubleArrowRight } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+import Filter from '../../../../components/filter/Filter'
 // import { Divider } from '@mui/material'
 
 const classes = [
   {
-    title: "Science",
-    totalStudents: "20",
-    from: "3pm",
-    to: "4pm",
-    bg: "#ce796b",
+    title: 'Science',
+    totalStudents: '20',
+    from: '3pm',
+    to: '4pm',
+    bg: '#ce796b',
   },
   {
-    title: "Maths",
-    totalStudents: "20",
-    from: "3pm",
-    to: "4pm",
-    bg: "#7a6038",
+    title: 'Maths',
+    totalStudents: '20',
+    from: '3pm',
+    to: '4pm',
+    bg: '#7a6038',
   },
   {
-    title: "Accounts",
-    totalStudents: "20",
-    from: "3pm",
-    to: "4pm",
-    bg: "#7e4b34",
+    title: 'Accounts',
+    totalStudents: '20',
+    from: '3pm',
+    to: '4pm',
+    bg: '#7e4b34',
   },
   {
-    title: "Economics",
-    totalStudents: "20",
-    from: "3pm",
-    to: "4pm",
-    bg: "#ce796b",
+    title: 'Economics',
+    totalStudents: '20',
+    from: '3pm',
+    to: '4pm',
+    bg: '#ce796b',
   },
   {
-    title: "Business",
-    totalStudents: "20",
-    from: "3pm",
-    to: "4pm",
-    bg: "#7a6038",
+    title: 'Business',
+    totalStudents: '20',
+    from: '3pm',
+    to: '4pm',
+    bg: '#7a6038',
   },
-];
+]
 
 function Batches() {
-  const [addClass, setAddClass] = useState(false);
-  const [filter, setFilter] = useState({ search: "" });
+  const [addBatch, setAddBatch] = useState(false)
+  const [filter, setFilter] = useState({ search: '' })
 
-  const router = useNavigate;
+  const router = useNavigate()
+
+  const handleAddBatchSubmit = () => {}
 
   return (
     <div className="classContainer">
       <Filter
         showBack={true}
         heading="All Batches"
-        type="classes"
+        type="batches"
         filter={filter}
         setFilter={setFilter}
       />
       <div className="cardsWrapper">
+        <div className="cardWrapper addCard" onClick={() => setAddBatch(true)}>
+          <Add fontSize="large" />
+        </div>
         {classes.map((classInfo, i) => (
           <div
             key={i}
@@ -67,7 +72,7 @@ function Batches() {
             style={{
               color: classInfo.bg,
             }}
-            onClick={() => ""}
+            onClick={() => ''}
           >
             <p> {classInfo.title}</p>
             <span> Total Students : 10</span>
@@ -75,7 +80,7 @@ function Batches() {
               style={{
                 background: classInfo.bg,
               }}
-              onClick={() => router.push("classes/batches")}
+              onClick={() => router.push('classes/batches')}
             >
               Details <KeyboardDoubleArrowRight />
             </div>
@@ -83,9 +88,14 @@ function Batches() {
         ))}
       </div>
 
-      <AddPopup type="class" open={addClass} setOpen={setAddClass} />
+      <AddPopup
+        type="batch"
+        open={addBatch}
+        setOpen={setAddBatch}
+        onsubmit={handleAddBatchSubmit}
+      />
     </div>
-  );
+  )
 }
 
-export default Batches;
+export default Batches

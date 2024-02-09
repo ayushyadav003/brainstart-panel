@@ -5,10 +5,10 @@ import {
   MenuItem,
   Select,
   TextField,
-} from "@mui/material";
-import { ArrowBack, Search } from "@mui/icons-material";
-import "./filter.scss";
-import { useNavigate } from "react-router-dom";
+} from '@mui/material'
+import { ArrowBack, Search } from '@mui/icons-material'
+import './filter.scss'
+import { useNavigate } from 'react-router-dom'
 
 export default function Filter({
   showBack,
@@ -19,30 +19,30 @@ export default function Filter({
   filter,
   setFilter,
 }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
-    setFilter({ ...filter, [e.target.name]: e.target.value });
-  };
+    setFilter({ ...filter, [e.target.name]: e.target.value })
+  }
   const searchBarPlaceholder = () => {
     switch (type) {
-      case "classes":
-        return "Class Name";
-      case "students":
-        return "Name/ Email/ Phone";
-      case "batches":
-        return "Batch name";
+      case 'classes':
+        return 'Class Name'
+      case 'students':
+        return 'Name/ Email/ Phone'
+      case 'batches':
+        return 'Batch name'
       default:
-        return "Search here...";
+        return 'Search here...'
     }
-  };
+  }
   return (
     <div className="filterContainer">
       <div className="heading">
         {showBack && (
           <ArrowBack
             onClick={() => navigate(-1)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           />
         )}
         <h1>{heading}</h1>
@@ -65,7 +65,7 @@ export default function Filter({
           <div className="dropDown">
             <Select
               id="demo-simple-select"
-              value={""}
+              value={''}
               // label="Age"
               name="class"
               displayEmpty
@@ -86,7 +86,7 @@ export default function Filter({
           <div className="dropDown">
             <Select
               id="demo-simple-select"
-              value={""}
+              value={''}
               // label="Age"
               displayEmpty
               name="batch"
@@ -105,5 +105,5 @@ export default function Filter({
         )}
       </div>
     </div>
-  );
+  )
 }

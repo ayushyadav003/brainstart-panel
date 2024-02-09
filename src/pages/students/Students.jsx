@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from 'react'
 // import CommonTable from '../../../components/common/Table'
-import "./students.module.scss";
+import './students.module.scss'
 import {
   Autocomplete,
   Button,
@@ -11,58 +11,58 @@ import {
   MenuItem,
   Select,
   TextField,
-} from "@mui/material";
-import AddPopup from "@/components/addPopup/AddPopup";
-import { useRouter } from "next/navigation";
-import { Search } from "@mui/icons-material";
-import { ApiWithToken } from "../../../services/ApiWithToken";
-import { apiConfig } from "../../../services/ApiConfig";
+} from '@mui/material'
+import AddPopup from '@/components/addPopup/AddPopup'
+import { useRouter } from 'next/navigation'
+import { Search } from '@mui/icons-material'
+import { ApiWithToken } from '../../../services/ApiWithToken'
+import { apiConfig } from '../../../services/ApiConfig'
 
 const studentData = [
   {
     id: 5,
-    name: "Ayush4",
-    phone: "9958109872",
-    class: "12th",
-    batch: "04:00-05:00",
+    name: 'Ayush4',
+    phone: '9958109872',
+    class: '12th',
+    batch: '04:00-05:00',
   },
   {
     id: 5,
-    name: "Ayush4",
-    phone: "9958109872",
-    class: "12th",
-    batch: "04:00-05:00",
+    name: 'Ayush4',
+    phone: '9958109872',
+    class: '12th',
+    batch: '04:00-05:00',
   },
   {
     id: 5,
-    name: "Ayush4",
-    phone: "9958109872",
-    class: "12th",
-    batch: "04:00-05:00",
+    name: 'Ayush4',
+    phone: '9958109872',
+    class: '12th',
+    batch: '04:00-05:00',
   },
-];
+]
 export default function Student() {
-  const [addStudent, setAddStudent] = useState(false);
+  const [addStudent, setAddStudent] = useState(false)
   const [newStudent, setNewStudent] = useState({
-    firstname: "",
-    lastname: "",
-    phone: "",
-    email: "",
-    class: "",
-    batch: "",
-  });
-  const router = useRouter();
+    firstname: '',
+    lastname: '',
+    phone: '',
+    email: '',
+    class: '',
+    batch: '',
+  })
+  const router = useRouter()
 
-  const header = ["Sno.", "Name", "Phone", "Class", "Batch"];
+  const header = ['Sno.', 'Name', 'Phone', 'Class', 'Batch']
 
   const addNewStudent = async () => {
     const apiOptions = {
-      method: "POST",
+      method: 'POST',
       url: apiConfig?.student,
       data: newStudent,
-    };
-    const data = await ApiWithToken();
-  };
+    }
+    const data = await ApiWithToken()
+  }
 
   return (
     <div className="studentsContainer">
@@ -92,7 +92,7 @@ export default function Student() {
             <Select
               labelId="demo-select-small-label"
               id="demo-select-small"
-              value={""}
+              value={''}
               label="Class"
               // onChange={handleChange}
             >
@@ -109,7 +109,7 @@ export default function Student() {
             <Select
               labelId="demo-select-small-label"
               id="demo-select-small"
-              value={""}
+              value={''}
               label="Batch"
               // onChange={handleChange}
             >
@@ -131,8 +131,8 @@ export default function Student() {
         </div>
       </div>
       <div className="studentWrapper">
-        <CommonTable head={header} rows={studentData} type="students" />
+        {/* <CommonTable head={header} rows={studentData} type="students" /> */}
       </div>
     </div>
-  );
+  )
 }
