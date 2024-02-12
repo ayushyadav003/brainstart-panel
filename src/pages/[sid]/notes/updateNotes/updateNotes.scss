@@ -1,0 +1,22 @@
+.updateNotesContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .indexingWrapper {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0 0 0;
+    padding: 10px;
+    background-color: #fff;
+    width: 50%;
+    margin: auto;
+  }
+
+  .editorWrapper {
+    padding: 20px;
+    .editor {
+      background-color: #fff;
+      height: 76vh;
+    }
+  }
+}

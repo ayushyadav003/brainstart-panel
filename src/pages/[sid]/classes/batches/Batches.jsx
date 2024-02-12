@@ -92,7 +92,7 @@ function Batches() {
         type="batch"
         open={addBatch}
         setOpen={setAddBatch}
-        onsubmit={handleAddBatchSubmit}
+        handleSubmit={handleAddBatchSubmit}
       />
     </div>
   )

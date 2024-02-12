@@ -1,0 +1,57 @@
+.scheduleContainer {
+  .icons {
+    span {
+      margin: 10px 10px 10px auto;
+      color: #8dd126;
+      border: 2px solid #8dd126;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      cursor: pointer;
+      height: 40px;
+      background-color: #fff;
+    }
+  }
+  .Scheduletable {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: fit-content;
+    .card {
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      background-color: #fff;
+      width: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 140px;
+      transition: all 0.2s ease-in-out;
+      border-radius: 10px;
+      padding: 10px;
+      p {
+        margin: 0;
+      }
+
+      p:nth-child(2) {
+        font-size: 1em;
+        font-weight: 600;
+      }
+      div {
+        font-size: 1em;
+        font-weight: 600;
+        color: gray;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p {
+          font-size: 1.5em;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

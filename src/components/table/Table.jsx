@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,9 +12,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import "./table.scss";
-import { Edit, RemoveRedEye } from "@mui/icons-material";
+import { Block, Delete, Edit, RemoveRedEye } from "@mui/icons-material";
+import { Tooltip } from "@mui/material";
 
-export default function CommonTable({ head, rows, type }) {
+export default function CommonTable({ head, rows, type,onEdit, onDelete, onView  }) {
+
   return (
     <TableContainer component={Paper} className="tableContainer">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -28,12 +31,11 @@ export default function CommonTable({ head, rows, type }) {
             <TableCell className="boldCell">{"Action"}</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody className="bodyStyle">
+        <TableBody>
           {rows &&
             rows.map((row, i) => (
               <TableRow
-                key={row.name}
-                className={i % 2 === 0 ? "rowBackground" : ""}
+                key={i}
               >
                 {type === "students" && (
                   <>
@@ -60,10 +62,10 @@ export default function CommonTable({ head, rows, type }) {
                       }}
                     >
                       <span className="icon">
-                        <RemoveRedEye fontSize="medium" />
+                        <Edit fontSize="small" onClick={onEdit} />
                       </span>
                       <span className="icon">
-                        <Edit fontSize="medium" />
+                        <Delete fontSize="small" onClick={onDelete} />
                       </span>
                     </TableCell>
                   </>
@@ -161,6 +163,45 @@ export default function CommonTable({ head, rows, type }) {
                     </TableCell>
                     <TableCell>
                       <RemoveRedEyeIcon />
+                    </TableCell>
+                  </>
+                )}
+                {type === "support" && (
+                  <>
+                    <TableCell component="th" scope="row">
+                      {row?.id}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row?.title}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row?.desc}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row?.createdAt}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <span style={{background:row?.status === 'Resolved'? '#809a7a':'#ec5d77', color:'#fff', borderRadius:'15px', padding:'5px 10px'}}>
+                      {row?.status}
+                      </span>
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <span className="icon">
+                      <Tooltip title="Edit Ticket">
+                        <Edit fontSize="small" onClick={onEdit} />
+                      </Tooltip>
+                      </span>
+                      <span className="icon">
+                      <Tooltip title="Close Ticket">
+                        <Block fontSize="small" onClick={onDelete} />
+                      </Tooltip>
+                      </span>
                     </TableCell>
                   </>
                 )}

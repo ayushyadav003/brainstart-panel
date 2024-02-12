@@ -1,11 +1,5 @@
-import {
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material'
+/* eslint-disable react/prop-types */
+import { InputAdornment, MenuItem, Select, TextField } from '@mui/material'
 import { ArrowBack, Search } from '@mui/icons-material'
 import './filter.scss'
 import { useNavigate } from 'react-router-dom'
@@ -16,6 +10,7 @@ export default function Filter({
   showBatch,
   heading,
   type,
+  hideSearch,
   filter,
   setFilter,
 }) {
@@ -48,19 +43,21 @@ export default function Filter({
         <h1>{heading}</h1>
       </div>
       <div className="filter">
-        <TextField
-          placeholder={searchBarPlaceholder()}
-          name="search"
-          onChange={handleChange}
-          size="small"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Search />
-              </InputAdornment>
-            ),
-          }}
-        />
+        {!hideSearch && (
+          <TextField
+            placeholder={searchBarPlaceholder()}
+            name="search"
+            onChange={handleChange}
+            size="small"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+          />
+        )}
         {showClass && (
           <div className="dropDown">
             <Select

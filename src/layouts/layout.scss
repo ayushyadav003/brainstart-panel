@@ -1,15 +1,15 @@
 .dashboardLayout {
-  background: #202020;
+  background: #fff;
   height: 100vh;
   .dashboard {
     display: flex;
     .dashboardBody {
-      background-color: #fff;
-      border-radius: 30px;
-      width: 85%;
-      height: 96vh;
+      background-color: #ecedf1;
+      // border-radius: 10px;
+      width: 87%;
+      height: 100vh;
       overflow: hidden;
-      margin: 2vh 1% 0 auto;
+      // margin: 2vh 1% 0 auto;
     }
   }
 }

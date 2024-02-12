@@ -7,7 +7,7 @@ export default function TeacherLayout({ children }) {
     <div className="dashboardLayout">
       <div className="dashboard">
         <Sidebar />
-        <div className={'dashboardBody'}>{children}</div>
+        <div className="dashboardBody">{children}</div>
       </div>
     </div>
   )

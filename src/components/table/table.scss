@@ -2,22 +2,16 @@
   .boldCell {
     font-weight: 600;
   }
-  .rowBackground {
-    background-color: #dcdcdc;
-  }
-}
-.record {
-  width: 10px;
-  margin: 0 3px;
-  display: flex;
-  border-radius: 50%;
-  background: gray;
-  height: 8px;
 }
 .icon {
-  background: black;
-  padding: 5px 5px 3px 5px;
+  padding: 6px 7px 3px 7px;
   color: #fff;
   cursor: pointer;
   border-radius: 10px;
+}
+.icon:first-child {
+  background-color: #487aef;
+}
+.icon:nth-child(2) {
+  background-color: #ec5d77;
 }

@@ -1,0 +1,35 @@
+.notesConatiner {
+  display: grid;
+  gap: 1rem;
+
+  .notes {
+    display: flex;
+    padding: 2rem;
+
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    .note {
+      width: 150px;
+      height: 180px;
+      position: relative;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      border-radius: 10px;
+      cursor: pointer;
+      div {
+      }
+      span {
+        color: #b30b00;
+      }
+      p {
+        position: absolute;
+        bottom: 0;
+        font-weight: 500;
+      }
+    }
+  }
+}
