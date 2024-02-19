@@ -1,101 +1,159 @@
 import {
   Button,
-  // FormControl,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
   InputAdornment,
-  // InputLabel,
-  // MenuItem,
-  // Select,
   TextField,
 } from '@mui/material'
 import './login.scss'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { useState } from 'react'
-import { Form, Formik } from 'formik'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import { apiConfig } from '../../services/ApiConfig'
+import { ApiWithOutToken } from '../../services/ApiWithoutToken'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
-  const handleTogglePasswordVisibility = () => {
+  const [currentOption, setCurrentOption] = useState('Teacher')
+  const [loading, setLoading] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
+  const [user, setUser] = useState({ email: '', password: '', role: 'Admin' })
+  const navigate = useNavigate()
+
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value })
+  }
+
+  const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
-  const handleChange = () => {}
+  const handleRememberMe = (e) => {
+    setRememberMe(e.target.checked)
+  }
+
+  const handleSubmitForm = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    const apiOptions = {
+      url: apiConfig.login,
+      method: 'POST',
+      data: {
+        ...user,
+        role: currentOption,
+      },
+    }
+    const response = await ApiWithOutToken(apiOptions)
+    if (response?.data?.statusCode === 200) {
+      const obj = response.data.data
+      delete obj.password
+      delete obj._V
+      const jsonString = JSON.stringify(obj)
+      localStorage.setItem('currentUser', jsonString)
+      toast.success(response.data.Message)
+      // navigate('/dashboard')
+    } else {
+      toast.error(response?.data.message)
+    }
+
+    setLoading(false)
+  }
+
+  const handleRole = (role) => {
+    localStorage.setItem('userRole', role)
+    setCurrentOption(role)
+  }
+
+  useEffect(() => {
+    setCurrentOption(localStorage.getItem('userRole') || 'Teacher')
+  }, [])
+
   return (
-    <div className="formWrapper">
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validate={(values) => {
-          const errors = {}
-          if (!values.email) {
-            errors.email = 'Required'
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = 'Invalid email address'
-          }
-          return errors
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            setSubmitting(false)
-          }, 400)
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            {' '}
-            <h1>Login</h1>
-            <TextField
-              label="Email"
-              varient="outlined"
-              name="email"
-              fullWidth
-              onChange={handleChange}
-            />
-            <TextField
-              label="Password"
-              varient="outlined"
-              fullWidth
-              name="password"
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <span
-                      style={{ cursor: 'pointer' }}
-                      onClick={handleTogglePasswordVisibility}
-                      // edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </span>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            {/* <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Intitution
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  // value={age}
-                  label="Age"
-                  onChange={handleChange}
+    <div className="loginForm">
+      <h2>Welcome to Brainstar!</h2>
+      <div className="switchRole">
+        <span
+          style={{
+            background: currentOption === 'Teacher' ? '#7433ff' : '#fff',
+            color: currentOption !== 'Teacher' ? '#000' : '#fff',
+          }}
+          onClick={() => handleRole('Teacher')}
+        >
+          Teacher
+        </span>
+        <span
+          style={{
+            background: currentOption === 'Student' ? '#7433ff' : '#fff',
+            color: currentOption !== 'Student' ? '#000' : '#fff',
+          }}
+          onClick={() => handleRole('Student')}
+        >
+          Student
+        </span>
+      </div>
+      <form onSubmit={handleSubmitForm}>
+        <TextField
+          label="Email"
+          fullWidth
+          margin="normal"
+          name="email"
+          required
+          onChange={handleChange}
+        />
+        <TextField
+          label="Password"
+          type={showPassword ? 'text' : 'password'}
+          fullWidth
+          name="password"
+          required
+          margin="normal"
+          onChange={handleChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <span
+                  style={{ cursor: 'pointer' }}
+                  onClick={togglePasswordVisibility}
+                  // edge="end"
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl> */}
-            <Button type="submit" variant="contained" disabled={isSubmitting}>
-              Login
-            </Button>
-          </Form>
-        )}
-      </Formik>
-      <a href="forget-password">
-        <p>Forget Password</p>
-      </a>
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </span>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <div className="remember">
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={rememberMe}
+                onChange={handleRememberMe}
+                sx={{ fontSize: '1px' }}
+              />
+            }
+            label={<span style={{ fontSize: '14px' }}>Remember me</span>}
+          />
+          <span
+            style={{ cursor: 'pointer', color: 'blue' }}
+            // onClick={() => setLoginStatus("forget")}
+          >
+            Forgot Password?
+          </span>
+        </div>
+        <Button
+          variant="contained"
+          style={{ marginTop: '1rem' }}
+          className="loginBtn"
+          type="submit"
+          disabled={loading}
+        >
+          Sign up
+          {loading && (
+            <CircularProgress size={30} style={{ marginLeft: '1rem' }} />
+          )}
+        </Button>
+      </form>
     </div>
   )
 }

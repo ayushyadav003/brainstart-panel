@@ -2,8 +2,10 @@ import './layout.scss'
 
 export default function LoginLayout({ children }) {
   return (
-    <div className="loginLayout">
-      <div className="loginImage"></div>
+    <div className="loginContainer">
+      <div className="loginInner">
+        <img src="/authimage.png" alt="" />
+      </div>
       {children}
     </div>
   )

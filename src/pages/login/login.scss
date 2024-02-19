@@ -1,19 +1,83 @@
-.formWrapper {
-  padding: 1rem 2rem;
-  width: 40%;
-  height: 100%;
-  form {
-    display: grid;
-    gap: 2rem;
-    button {
-      background: purple;
+.loginForm {
+  padding: 1rem 5rem;
+  width: 45%;
+  .switchRole {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem auto 2rem auto;
+    border: 1px solid #dcdcdc;
+    width: fit-content;
+    padding: 7px 10px;
+    border-radius: 10px;
+    span {
+      width: 100px;
+      font-size: 17px;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
     }
   }
-  a {
-    all: unset;
-    cursor: pointer;
-    p {
-      margin-top: 10%;
+  .inner {
+    font-size: 14px;
+    color: gray;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    a {
+      border: 1px solid #dcdcdc;
+      background: #fff;
+      padding: 6px 15px;
+      font-size: 14px;
+      color: gray;
+      cursor: pointer;
+      border-radius: 20px;
+    }
+  }
+  h2 {
+    margin-top: 4rem;
+  }
+  .remember {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .loginBtn {
+    margin: 4rem auto;
+    border-radius: 40px;
+    padding: 10px 40px;
+    background-color: #7433ff;
+    font-size: 16px;
+    width: fit-content;
+  }
+}
+@media screen and (max-width: 768px) {
+  .loginForm {
+    padding: 1rem;
+    width: 92%;
+    .inner {
+      button {
+        border: 1px solid #dcdcdc;
+        background: #fff;
+        padding: 6px 15px;
+        font-size: 14px;
+        color: gray;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+    }
+    h2 {
+      margin-top: 1rem;
+    }
+    .remember {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .loginBtn {
+      margin: 2rem auto;
     }
   }
 }

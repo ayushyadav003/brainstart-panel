@@ -1,43 +1,59 @@
-.dashboardLayout {
-  background: #fff;
+.loginContainer {
+  display: flex;
+  text-align: center;
+  justify-content: center;
   height: 100vh;
-  .dashboard {
+  .loginInner {
+    background-color: #faf8fd;
+    height: inherit;
     display: flex;
-    .dashboardBody {
-      background-color: #ecedf1;
-      // border-radius: 10px;
-      width: 87%;
-      height: 100vh;
-      overflow: hidden;
-      // margin: 2vh 1% 0 auto;
+    align-items: center;
+    width: 55%;
+    justify-content: center;
+    img {
+      max-height: 400px;
     }
   }
 }
-.loginLayout {
-  display: flex;
-  width: 100%;
-
-  height: 100vh;
-  .loginImage {
-    background-color: aliceblue;
-    width: 60%;
-    height: 100%;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .dashboardLayout {
-    background: #202020;
-    height: 100vh;
-    .dashboard {
+@media screen and (max-width: 768px) {
+  .loginContainer {
+    flex-direction: column;
+    height: fit-content;
+    .loginInner {
+      background-color: #faf8fd;
+      height: 100%;
       display: flex;
-      .dashboardBody {
-        background-color: #fff;
-        border-radius: 30px;
-        width: 85%;
-        height: 96vh;
-        overflow: hidden;
-        margin: 2vh 1% 0 auto;
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+      img {
+        max-height: 170px;
+      }
+    }
+    .loginForm {
+      padding: 1rem;
+      width: 92%;
+      .inner {
+        button {
+          border: 1px solid #dcdcdc;
+          background: #fff;
+          padding: 6px 15px;
+          font-size: 14px;
+          color: gray;
+          cursor: pointer;
+          border-radius: 20px;
+        }
+      }
+      h2 {
+        margin-top: 1rem;
+      }
+      .remember {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .loginBtn {
+        margin: 2rem auto;
       }
     }
   }

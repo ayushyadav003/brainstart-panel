@@ -16,7 +16,7 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/login"
+          path="/"
           element={
             <LoginLayout>
               <Login />
@@ -24,7 +24,7 @@ export default function Router() {
           }
         />
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <TeacherLayout>
               <Dashboard />
