@@ -1,6 +1,7 @@
 .sidebarContainer {
   padding: 2rem 0 0 0;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   // height: 100vh;
   border-right: 1px solid #dcdcdc;
   width: 13%;

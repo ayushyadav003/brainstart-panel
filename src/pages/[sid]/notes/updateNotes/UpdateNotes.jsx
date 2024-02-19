@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
-import './updateNotes.scss'
-import Filter from '../../../../components/filter/Filter'
-import { MenuItem, Select, TextField } from '@mui/material'
+import { useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "./updateNotes.scss";
+import Filter from "../../../../components/filter/Filter";
+
+import { MenuItem, Select, TextField } from "@mui/material";
 
 export default function UpdateNotes() {
-  const [convertedText, setConvertedText] = useState('Some default content')
+  const [convertedText, setConvertedText] = useState("Some default content");
   const [documentDetails, setDocumentDeatils] = useState({
-    title: '',
-    class: '',
-    batch: '',
-  })
+    title: "",
+    class: "",
+    batch: "",
+  });
 
-  // const handleNotesIndexing = () => {}
+  const handleNotesIndexing = (html) => {
+    setConvertedText(html);
+  };
 
   const handleChange = (e) => {
-    setDocumentDeatils({ ...documentDetails, [e.target.name]: e.target.value })
-  }
+    setDocumentDeatils({ ...documentDetails, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="updateNotesContainer">
       <Filter
         showBack={true}
-        heading={'Notes'}
+        heading={"Notes"}
         hideSearch={true}
-        type={'notes'}
+        type={"notes"}
       />
       <div className="indexingWrapper">
         <TextField
-          placeholder={'Add title'}
+          placeholder={"Add title"}
           name="title"
           onChange={handleChange}
           size="small"
@@ -37,7 +40,7 @@ export default function UpdateNotes() {
         <div className="dropDown">
           <Select
             id="demo-simple-select"
-            value={''}
+            value={""}
             name="class"
             displayEmpty
             fullWidth
@@ -55,7 +58,7 @@ export default function UpdateNotes() {
         <div className="dropDown">
           <Select
             id="demo-simple-select"
-            value={''}
+            value={""}
             displayEmpty
             name="batch"
             fullWidth
@@ -74,14 +77,27 @@ export default function UpdateNotes() {
 
       <div className="editorWrapper">
         <div className="editor">
-          <ReactQuill
-            theme="snow"
-            value={convertedText}
-            onChange={setConvertedText}
-            style={{ height: '70vh' }}
-          />
+          {/* <ReactQuill
+        theme="snow"
+        onChange={handleNotesIndexing}
+        value={convertedText}
+        modules={{
+          toolbar: [
+            [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+            [{size: []}],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{'list': 'ordered'}, {'list': 'bullet'}, 
+             {'indent': '-1'}, {'indent': '+1'}],
+            ['link', 'image', 'video'],
+            ['clean']
+          ],
+          clipboard: {
+            matchVisual: false,
+          }
+        }}
+      /> */}
         </div>
       </div>
     </div>
-  )
+  );
 }
