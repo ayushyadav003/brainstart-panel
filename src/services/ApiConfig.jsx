@@ -1,6 +1,6 @@
 // const apiUrl = 'https://brainstarapi.azurewebsites.net'
 // const apiUrl = 'https://brainstar.azurewebsites.net/api/v1'
-const apiUrl = 'http://localhost:8000/api/v1'
+const apiUrl = "http://localhost:8000/api/v1";
 
 export const apiConfig = {
   //auth
@@ -8,6 +8,9 @@ export const apiConfig = {
   login: `${apiUrl}/auth`,
   refreshToken: `${apiUrl}/-`,
 
+  //class
+  class: `${apiUrl}/class`,
+
   //students
   student: `${apiUrl}/Student`,
-}
+};

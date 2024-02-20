@@ -4,7 +4,7 @@
   overflow-y: auto;
   // height: 100vh;
   border-right: 1px solid #dcdcdc;
-  width: 13%;
+  width: 170px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,9 +13,21 @@
     width: 60px;
     background-color: beige;
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    img {
+      height: 60px;
+      width: 60px;
+    }
+    p {
+      margin: 10px 0 0 0;
+      color: gray;
+    }
   }
   .sidebarOptions {
-    margin: 2rem 0 0 0;
+    margin: 3rem 0 0 0;
     .options {
       display: flex;
       color: #000;

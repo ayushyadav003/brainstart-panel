@@ -1,19 +1,16 @@
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import axios from "axios";
+import { toast } from "react-toastify";
 
-export const ApiWithToken = async ({ url, method, data, param }) => {
+export const ApiWithToken = async ({ url, method, data, params }) => {
   const apiOptions = {
     url,
     method,
-    data,
-    params: { ...param, Authorization: localStorage.getItem('userToken') },
+    headers: { Authorization: localStorage.getItem("userToken") },
+    params,
+    data: data,
+  };
+  const res = await axios(apiOptions);
+  if (res?.data) {
+    return res.data;
   }
-  try {
-    const res = await axios(apiOptions)
-    if (res?.data) {
-      return res.data
-    }
-  } catch (error) {
-    toast.error('Somthing went wrong!')
-  }
-}
+};

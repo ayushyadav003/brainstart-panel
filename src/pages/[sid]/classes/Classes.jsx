@@ -1,23 +1,66 @@
-import { useState } from 'react'
-import './classes.scss'
-import AddPopup from '../../../components/addPopup/AddPopup'
-import { Add, KeyboardDoubleArrowRight } from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
-import Filter from '../../../components/filter/Filter'
+import { useEffect, useState } from "react";
+import "./classes.scss";
+import AddPopup from "../../../components/addPopup/AddPopup";
+import { Add, Api, KeyboardDoubleArrowRight } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import Filter from "../../../components/filter/Filter";
+import { apiConfig } from "../../../services/ApiConfig";
+import { useSelector } from "react-redux";
+import { ApiWithToken } from "../../../services/ApiWithToken";
+import { toast } from "react-toastify";
 
-const classes = [
-  { title: '1st', totalStudents: '20', batches: '04', bg: '#ce796b' },
-  { title: '2nd', totalStudents: '20', batches: '04', bg: '#7a6038' },
-  { title: '3rd', totalStudents: '20', batches: '04', bg: '#7e4b34' },
-  { title: '4th', totalStudents: '20', batches: '04', bg: '#ce796b' },
-  { title: '5th', totalStudents: '20', batches: '04', bg: '#7a6038' },
-  { title: '6th', totalStudents: '20', batches: '04', bg: '#7e4b34' },
-]
+const classes = ["#ce796b", "#7a6038", "#7e4b34"];
 
 function Classes() {
-  const [addClass, setAddClass] = useState(false)
-  const [filter, setFilter] = useState({ search: '' })
-  const navigate = useNavigate()
+  const [addClass, setAddClass] = useState(false);
+  const [filter, setFilter] = useState({ search: "" });
+  const [allClasses, setAllClasses] = useState([]);
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user);
+
+  const addNewClass = async (classData) => {
+    console.log(classData);
+
+    try {
+      const apiOPtions = {
+        method: "POST",
+        url: apiConfig.class,
+        data: { title: classData.title, institute: currentUser?._id },
+      };
+      const response = await ApiWithToken(apiOPtions);
+      if (response?.statusCode === 201) {
+        toast.success(response?.message);
+        setAddClass(false);
+        getAllClasses();
+      }
+    } catch (error) {
+      toast.warning(error?.response?.data?.message);
+    }
+  };
+
+  const getAllClasses = async () => {
+    try {
+      const apiOPtions = {
+        method: "GET",
+        url: apiConfig.class,
+        params: { institute: currentUser?._id },
+      };
+      const response = await ApiWithToken(apiOPtions);
+
+      if (response?.statusCode === 200) {
+        console.log(response);
+        setAllClasses(response?.classes);
+      }
+    } catch (error) {
+      toast.warning(error?.response?.data?.message);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser?._id) {
+      getAllClasses();
+    }
+  }, [currentUser]);
 
   return (
     <div className="classContainer">
@@ -32,31 +75,40 @@ function Classes() {
         <div className="cardWrapper addCard" onClick={() => setAddClass(true)}>
           <Add fontSize="large" />
         </div>
-        {classes.map((classInfo, i) => (
-          <div
-            key={i}
-            className="cardWrapper"
-            style={{
-              color: classInfo.bg,
-            }}
-          >
-            <p> {classInfo.title}</p>
-            <span> Total Students : 10</span>
-            <div
-              style={{
-                background: classInfo.bg,
-              }}
-              onClick={() => navigate(`${classInfo.title}/batches`)}
-            >
-              Batches <KeyboardDoubleArrowRight />
-            </div>
-          </div>
-        ))}
+        {allClasses?.length > 0
+          ? allClasses.map((classInfo, i) => {
+              return (
+                <div
+                  key={i}
+                  className="cardWrapper"
+                  style={{
+                    color: classes[2],
+                  }}
+                >
+                  <p> {classInfo.title}</p>
+                  <span> Total Students : 10</span>
+                  <div
+                    style={{
+                      background: classes[2],
+                    }}
+                    onClick={() => navigate(`${classInfo._id}/batches`)}
+                  >
+                    Batches <KeyboardDoubleArrowRight />
+                  </div>
+                </div>
+              );
+            })
+          : "Please add classes"}
       </div>
 
-      <AddPopup type="class" open={addClass} setOpen={setAddClass} />
+      <AddPopup
+        type="class"
+        open={addClass}
+        setOpen={setAddClass}
+        onSubmit={(classData) => addNewClass(classData)}
+      />
     </div>
-  )
+  );
 }
 
-export default Classes
+export default Classes;

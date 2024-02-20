@@ -16,6 +16,13 @@
     }
   }
 }
+.dashboardLayout {
+  background-color: #fff;
+  display: flex;
+  .dashboardBody {
+    width: 100%;
+  }
+}
 @media screen and (max-width: 768px) {
   .loginContainer {
     flex-direction: column;
