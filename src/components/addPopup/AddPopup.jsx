@@ -164,6 +164,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                 id="tags-outlined"
                 options={[]}
                 fullWidth
+                {...register('class')}
                 getOptionLabel={(option) => option.title}
                 filterSelectedOptions
                 renderInput={(params) => (
