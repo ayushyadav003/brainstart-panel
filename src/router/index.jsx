@@ -24,7 +24,7 @@ export default function Router() {
           }
         />
         <Route
-          path="/dashboard"
+          path="/analytics"
           element={
             <TeacherLayout>
               <Dashboard />

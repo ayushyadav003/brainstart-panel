@@ -1,56 +1,73 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../classes.scss'
 import AddPopup from '../../../../components/addPopup/AddPopup'
 import { Add, KeyboardDoubleArrowRight } from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Filter from '../../../../components/filter/Filter'
+import { apiConfig } from '../../../../services/ApiConfig'
+import { toast } from 'react-toastify'
+import { ApiWithToken } from '../../../../services/ApiWithToken'
+import { useSelector } from 'react-redux'
 // import { Divider } from '@mui/material'
-
-const classes = [
-  {
-    title: 'Science',
-    totalStudents: '20',
-    from: '3pm',
-    to: '4pm',
-    bg: '#ce796b',
-  },
-  {
-    title: 'Maths',
-    totalStudents: '20',
-    from: '3pm',
-    to: '4pm',
-    bg: '#7a6038',
-  },
-  {
-    title: 'Accounts',
-    totalStudents: '20',
-    from: '3pm',
-    to: '4pm',
-    bg: '#7e4b34',
-  },
-  {
-    title: 'Economics',
-    totalStudents: '20',
-    from: '3pm',
-    to: '4pm',
-    bg: '#ce796b',
-  },
-  {
-    title: 'Business',
-    totalStudents: '20',
-    from: '3pm',
-    to: '4pm',
-    bg: '#7a6038',
-  },
-]
 
 function Batches() {
   const [addBatch, setAddBatch] = useState(false)
+  const [allBatches, setAllBatches] = useState([])
   const [filter, setFilter] = useState({ search: '' })
-
   const router = useNavigate()
+  const searchParams = useParams()
 
-  const handleAddBatchSubmit = () => {}
+  const { currentUser } = useSelector((state) => state.user)
+
+  const addNewBatch = async (classData) => {
+    console.log(classData)
+
+    try {
+      const apiOPtions = {
+        method: 'POST',
+        url: apiConfig.batch,
+        data: {
+          title: classData.title,
+          fees: classData.fees,
+          classId: searchParams.id,
+          institute: currentUser?._id,
+        },
+      }
+      const response = await ApiWithToken(apiOPtions)
+      if (response?.statusCode === 201) {
+        toast.success(response?.message)
+        setAllBatches(false)
+        setAddBatch(false)
+        getAllBatches()
+      }
+    } catch (error) {
+      toast.warning(error?.response?.data?.message)
+    }
+  }
+
+  const getAllBatches = async (institute, classId) => {
+    try {
+      const apiOPtions = {
+        method: 'GET',
+        url: apiConfig.batch,
+        params: { institute, classId },
+      }
+      const response = await ApiWithToken(apiOPtions)
+
+      if (response?.statusCode === 200) {
+        console.log(response)
+        setAllBatches(response?.batches)
+      }
+    } catch (error) {
+      // toast.warning(error?.response?.data?.message)
+    }
+  }
+
+  useEffect(() => {
+    if (currentUser?._id && searchParams.id) {
+      getAllBatches(currentUser?._id, searchParams.id)
+    }
+  }, [currentUser])
 
   return (
     <div className="classContainer">
@@ -65,34 +82,35 @@ function Batches() {
         <div className="cardWrapper addCard" onClick={() => setAddBatch(true)}>
           <Add fontSize="large" />
         </div>
-        {classes.map((classInfo, i) => (
-          <div
-            key={i}
-            className="cardWrapper"
-            style={{
-              color: classInfo.bg,
-            }}
-            onClick={() => ''}
-          >
-            <p> {classInfo.title}</p>
-            <span> Total Students : 10</span>
+        {allBatches.length > 0 &&
+          allBatches.map((classInfo, i) => (
             <div
+              key={i}
+              className="cardWrapper"
               style={{
-                background: classInfo.bg,
+                color: classInfo.bg,
               }}
-              onClick={() => router.push('classes/batches')}
+              onClick={() => ''}
             >
-              Details <KeyboardDoubleArrowRight />
+              <p> {classInfo.title}</p>
+              <span> Total Students : 10</span>
+              <div
+                style={{
+                  background: classInfo.bg,
+                }}
+                onClick={() => router.push('classes/batches')}
+              >
+                Details <KeyboardDoubleArrowRight />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       <AddPopup
         type="batch"
         open={addBatch}
         setOpen={setAddBatch}
-        handleSubmit={handleAddBatchSubmit}
+        onSubmit={(classData) => addNewBatch(classData)}
       />
     </div>
   )

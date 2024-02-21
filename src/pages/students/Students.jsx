@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@mui/material'
-import { ApiWithOutToken } from '../../services/ApiWithoutToken'
 import { apiConfig } from '../../services/ApiConfig'
 import AddPopup from '../../components/addPopup/AddPopup'
 import Filter from '../../components/filter/Filter'
 import CommonTable from '../../components/table/Table'
 import './students.scss'
+import { useSelector } from 'react-redux'
+import { ApiWithToken } from '../../services/ApiWithToken'
+import { toast } from 'react-toastify'
 
 const studentData = [
   {
@@ -32,26 +34,55 @@ const studentData = [
 ]
 export default function Student() {
   const [addStudent, setAddStudent] = useState(false)
+  const [allStudents, setAllStudents] = useState([])
   const [filter, setFilter] = useState({ search: '', class: '', batch: '' })
-  const [newStudent, setNewStudent] = useState({
-    firstname: '',
-    lastname: '',
-    phone: '',
-    email: '',
-    class: '',
-    batch: '',
-  })
+  const { currentUser } = useSelector((state) => state.user)
 
   const header = ['Sno.', 'Name', 'Phone', 'Class', 'Batch']
 
-  const addNewStudent = async () => {
-    const apiOptions = {
-      method: 'POST',
-      url: apiConfig?.student,
-      data: newStudent,
+  const addNewStudent = async (classData) => {
+    console.log(classData)
+
+    try {
+      const apiOPtions = {
+        method: 'POST',
+        url: apiConfig.class,
+        data: { title: classData.title, institute: currentUser?._id },
+      }
+      const response = await ApiWithToken(apiOPtions)
+      if (response?.statusCode === 201) {
+        toast.success(response?.message)
+        setAddStudent(false)
+        getAllStudents()
+      }
+    } catch (error) {
+      toast.warning(error?.response?.data?.message)
     }
-    const data = await ApiWithOutToken()
   }
+
+  const getAllStudents = async () => {
+    try {
+      const apiOPtions = {
+        method: 'GET',
+        url: apiConfig.student,
+        params: { institute: currentUser?._id },
+      }
+      const response = await ApiWithToken(apiOPtions)
+
+      if (response?.statusCode === 200) {
+        console.log(response)
+        setAllStudents(response?.students)
+      }
+    } catch (error) {
+      toast.warning(error?.response?.data?.message)
+    }
+  }
+
+  useEffect(() => {
+    if (currentUser?._id) {
+      getAllStudents()
+    }
+  }, [currentUser])
 
   return (
     <div className="studentsContainer">
@@ -59,9 +90,7 @@ export default function Student() {
         type="students"
         open={addStudent}
         setOpen={setAddStudent}
-        setvalues={setNewStudent}
-        values={newStudent}
-        handleSubmit={addNewStudent}
+        onSubmit={(classData) => addNewStudent(classData)}
       />
       <Filter
         showBack={false}
@@ -78,7 +107,7 @@ export default function Student() {
         </Button>
       </div>
       <div className="studentWrapper">
-        <CommonTable head={header} rows={studentData} type="students" />
+        <CommonTable head={header} rows={allStudents} type="students" />
       </div>
     </div>
   )
