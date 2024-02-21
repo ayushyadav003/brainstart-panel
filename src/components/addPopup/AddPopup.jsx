@@ -3,38 +3,50 @@
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 // import { TimePicker } from '@mui/x-date-pickers/TimePicker'
-import Dialog from '@mui/material/Dialog'
-import './addPopup.scss'
-import { Autocomplete, Button, InputAdornment, TextField } from '@mui/material'
-import { Close, CurrencyRupee } from '@mui/icons-material'
-import { useForm } from 'react-hook-form'
+import Dialog from "@mui/material/Dialog";
+import "./addPopup.scss";
+import { Autocomplete, Button, InputAdornment, TextField } from "@mui/material";
+import { Close, CurrencyRupee } from "@mui/icons-material";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
-export default function AddPopup({ type, open, setOpen, onSubmit }) {
-  const { register, handleSubmit } = useForm()
+export default function AddPopup({
+  type,
+  open,
+  setOpen,
+  onSubmit,
+  classes,
+  setSelectedClass,
+  selectBatches,
+  setSelectedBatches,
+}) {
+  const { register, handleSubmit } = useForm();
 
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth={false}>
       <Close
         style={{
-          position: 'absolute',
-          right: '25px',
-          top: '15px',
-          cursor: 'pointer',
+          position: "absolute",
+          right: "25px",
+          top: "15px",
+          cursor: "pointer",
         }}
         onClick={handleClose}
       />
       <form onSubmit={handleSubmit(onSubmit)}>
-        {type === 'class' && (
+        {type === "class" && (
           <div className="popupBox">
             <h2>Add New Class</h2>
             <TextField
               placeholder="Title"
               required
-              {...register('title')}
+              {...register("title")}
               className="field"
               fullWidth
             />
@@ -43,12 +55,12 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
             </Button>
           </div>
         )}
-        {type === 'batch' && (
+        {type === "batch" && (
           <div className="popupBox">
             <h2>Add New Batch</h2>
             <TextField
               placeholder="Title"
-              {...register('title')}
+              {...register("title")}
               className="field"
               required
               fullWidth
@@ -57,7 +69,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
               placeholder="Fee"
               className="field"
               fullWidth
-              {...register('fees')}
+              {...register("fees")}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -95,7 +107,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
             </Button>
           </div>
         )}
-        {type === 'support' && (
+        {type === "support" && (
           <div className="popupBox">
             <h2>Raise New Ticket</h2>
             <TextField
@@ -119,19 +131,19 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
           </div>
         )}
 
-        {type === 'students' && (
+        {type === "students" && (
           <div className="popupBox">
             <h2>Add New Student</h2>
             <div className="subSection">
               <TextField
                 placeholder="Fullname"
-                {...register('fullName')}
+                {...register("fullName")}
                 className="field"
                 fullWidth
               />
               <TextField
                 placeholder="Email"
-                {...register('email')}
+                {...register("email")}
                 className="field"
                 fullWidth
               />
@@ -140,7 +152,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
               <TextField
                 placeholder="Fee"
                 className="field"
-                {...register('fee')}
+                {...register("fee")}
                 fullWidth
                 required
                 InputProps={{
@@ -153,18 +165,18 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
               />
               <TextField
                 placeholder="Phone"
-                {...register('phone')}
+                {...register("phone")}
                 className="field"
                 fullWidth
               />
             </div>
             <div className="subSection">
               <Autocomplete
-                multiple
                 id="tags-outlined"
-                options={[]}
+                options={classes}
                 fullWidth
-                {...register('class')}
+                {...register("class")}
+                onChange={(e, value) => setSelectedClass(value)}
                 getOptionLabel={(option) => option.title}
                 filterSelectedOptions
                 renderInput={(params) => (
@@ -173,22 +185,23 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
               />
               <Autocomplete
                 multiple
-                id="tags-outlined"
-                options={[]}
+                id="tags-outlined2"
+                options={selectBatches}
                 fullWidth
                 getOptionLabel={(option) => option.title}
                 filterSelectedOptions
+                onChange={(e, value) => setSelectedBatches(value)}
                 renderInput={(params) => (
-                  <TextField {...params} placeholder="Select Batch" />
+                  <TextField {...params} placeholder="Select Class" />
                 )}
               />
             </div>
-            <Button variant="contained" className="submitBtn">
+            <Button variant="contained" className="submitBtn" type="submit">
               Add
             </Button>
           </div>
         )}
       </form>
     </Dialog>
-  )
+  );
 }
