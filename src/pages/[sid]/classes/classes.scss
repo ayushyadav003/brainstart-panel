@@ -1,5 +1,6 @@
 .classContainer {
-  // display: flex;
+  display: flex;
+  width: 100%;
   flex-wrap: wrap;
   justify-content: center;
   color: #000;
@@ -7,6 +8,7 @@
   .header {
     border-bottom: 1px solid #ccc;
     padding: 20px;
+    width: 100%;
     h1 {
       margin: 0;
     }

@@ -40,13 +40,16 @@ export default function CommonTable({ head, rows, type,onEdit, onDelete, onView 
                 {type === "students" && (
                   <>
                     <TableCell component="th" scope="row">
-                      {row?.id}
+                      {i+1}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.name}
+                      {row?.fullName}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.phone}
+                      {row?.email || '--'}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row?.phone || '--'}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {row?.class}
