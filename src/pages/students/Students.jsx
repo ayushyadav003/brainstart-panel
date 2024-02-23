@@ -19,7 +19,7 @@ export default function Student() {
   const [filter, setFilter] = useState({ search: '', class: '', batch: '' })
   const { currentUser } = useSelector((state) => state.user)
 
-  const header = ['Sno.', 'Name', 'Phone', 'Class', 'Batch']
+  const header = ['Sno.', 'Name', 'Email', 'Phone', 'Class', 'Batch']
 
   const addNewStudent = async (classData) => {
     const obj = classData

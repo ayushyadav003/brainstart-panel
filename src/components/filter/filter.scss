@@ -1,12 +1,12 @@
 .filterContainer {
-  padding: 12px 2rem;
-  width: auto;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   background-color: #fff;
   border-bottom: 1px solid #dcdcdc;
   .heading {
     display: flex;
+    padding: 15px 2rem;
     align-items: center;
     gap: 1.5rem;
     h1 {
@@ -16,6 +16,7 @@
   }
   .filter {
     display: flex;
+    padding: 15px 2rem;
     align-items: center;
     gap: 1rem;
     .dropDown {
