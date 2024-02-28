@@ -1,6 +1,10 @@
 .filterContainer {
-  width: 100%;
+  width: 87vw;
   display: flex;
+  height: 70px;
+  position: fixed;
+  z-index: 99;
+  top: 0;
   justify-content: space-between;
   background-color: #fff;
   border-bottom: 1px solid #dcdcdc;
@@ -21,6 +25,21 @@
     gap: 1rem;
     .dropDown {
       width: 140px;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .filterContainer {
+    width: 100vw;
+    .heading {
+      display: flex;
+      padding: 10px;
+      align-items: center;
+      gap: 1.5rem;
+      h1 {
+        margin: 0;
+        font-size: 1.2em;
+      }
     }
   }
 }

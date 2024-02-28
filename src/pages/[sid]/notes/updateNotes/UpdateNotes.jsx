@@ -77,25 +77,30 @@ export default function UpdateNotes() {
 
       <div className="editorWrapper">
         <div className="editor">
-          {/* <ReactQuill
-        theme="snow"
-        onChange={handleNotesIndexing}
-        value={convertedText}
-        modules={{
-          toolbar: [
-            [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-            [{size: []}],
-            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-            [{'list': 'ordered'}, {'list': 'bullet'}, 
-             {'indent': '-1'}, {'indent': '+1'}],
-            ['link', 'image', 'video'],
-            ['clean']
-          ],
-          clipboard: {
-            matchVisual: false,
-          }
-        }}
-      /> */}
+          <ReactQuill
+            theme="snow"
+            onChange={handleNotesIndexing}
+            value={convertedText}
+            style={{ height: "350px" }}
+            modules={{
+              toolbar: [
+                [{ header: "1" }, { header: "2" }, { font: [] }],
+                [{ size: [] }],
+                ["bold", "italic", "underline", "strike", "blockquote"],
+                [
+                  { list: "ordered" },
+                  { list: "bullet" },
+                  { indent: "-1" },
+                  { indent: "+1" },
+                ],
+                ["link", "image", "video"],
+                ["clean"],
+              ],
+              clipboard: {
+                matchVisual: false,
+              },
+            }}
+          />
         </div>
       </div>
     </div>

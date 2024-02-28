@@ -1,7 +1,7 @@
 // import { Add } from '@mui/icons-material'
-import { Button } from '@mui/material'
-import Filter from '../../components/filter/Filter'
-import './scheduledClasses.scss'
+import { Button } from "@mui/material";
+import Filter from "../../components/filter/Filter";
+import "./scheduledClasses.scss";
 
 export default function ScheduledClass() {
   return (
@@ -14,7 +14,7 @@ export default function ScheduledClass() {
       </div> */}
 
       <div className="Scheduletable">
-        {[...Array(7)].map((data, i) => (
+        {[...Array(10)].map((data, i) => (
           <div key={i} className="card">
             <div>
               <p>12th</p>
@@ -32,5 +32,5 @@ export default function ScheduledClass() {
         ))}
       </div>
     </div>
-  )
+  );
 }
