@@ -17,7 +17,7 @@
   .Scheduletable {
     padding: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     gap: 1rem;
     flex-wrap: wrap;
     width: fit-content;
@@ -25,6 +25,7 @@
       box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
       background-color: #fff;
       width: 20%;
+      min-width: 300px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -52,6 +53,17 @@
           font-weight: 600;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .scheduleContainer {
+    .Scheduletable {
+      margin-top: 63px;
+      margin-bottom: 71px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
   }
 }
