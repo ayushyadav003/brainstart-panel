@@ -13,6 +13,9 @@
     padding: 15px 2rem;
     align-items: center;
     gap: 1.5rem;
+    .searchBarIcon {
+      display: none;
+    }
     h1 {
       margin: 0;
       font-size: 1.6em;
@@ -30,15 +33,61 @@
 }
 @media screen and (max-width: 768px) {
   .filterContainer {
+    background-color: #fff;
+    position: relative;
     width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .heading {
       display: flex;
       padding: 10px;
       align-items: center;
+      width: 100%;
       gap: 1.5rem;
+
       h1 {
         margin: 0;
         font-size: 1.2em;
+      }
+      .searchBarIcon {
+        display: flex;
+        position: absolute;
+        right: 30px;
+      }
+    }
+    .filter {
+      position: fixed;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      top: -500px;
+      opacity: 0;
+      transition: all ease-in 100ms 100ms;
+      flex-direction: column;
+      gap: 10px;
+      .dropDown {
+        width: 90%;
+      }
+      .search {
+        width: 90%;
+      }
+    }
+    .filterOpen {
+      position: fixed;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      top: 80px;
+      transition: all ease-in 100ms 100ms;
+      background-color: #fff;
+      flex-direction: column;
+      gap: 10px;
+      .dropDown {
+        width: 90%;
+      }
+      .search {
+        width: 90%;
       }
     }
   }
