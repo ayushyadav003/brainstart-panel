@@ -5,10 +5,16 @@
 // import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import Dialog from '@mui/material/Dialog'
 import './addPopup.scss'
-import { Autocomplete, Button, InputAdornment, TextField } from '@mui/material'
+import {
+  Autocomplete,
+  Button,
+  CircularProgress,
+  InputAdornment,
+  TextField,
+} from '@mui/material'
 import { Close, CurrencyRupee } from '@mui/icons-material'
 import { useForm } from 'react-hook-form'
-import { useEffect } from 'react'
+import { useState } from 'react'
 
 export default function AddPopup({
   type,
@@ -21,14 +27,17 @@ export default function AddPopup({
   setSelectedBatches,
 }) {
   const { register, handleSubmit, reset } = useForm()
+  const [loading, setLoading] = useState(false)
 
   const handleClose = () => {
     setOpen(false)
   }
 
-  useEffect(() => {
-    reset()
-  }, [open])
+  const handleFormSubmit = async (data) => {
+    setLoading(true)
+    await onSubmit(data, reset)
+    setLoading(false)
+  }
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth={false}>
@@ -41,7 +50,7 @@ export default function AddPopup({
         }}
         onClick={handleClose}
       />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
         {type === 'class' && (
           <div className="popupBox">
             <h2>Add New Class</h2>
@@ -52,7 +61,12 @@ export default function AddPopup({
               className="field"
               fullWidth
             />
-            <Button variant="contained" className="submitBtn" type="submit">
+            <Button
+              variant="contained"
+              className="submitBtn"
+              type="submit"
+              disabled={loading}
+            >
               Add
             </Button>
           </div>
@@ -104,7 +118,12 @@ export default function AddPopup({
               )}
             /> */}
 
-            <Button variant="contained" className="submitBtn" type="submit">
+            <Button
+              variant="contained"
+              className="submitBtn"
+              type="submit"
+              disabled={loading}
+            >
               Add
             </Button>
           </div>
@@ -200,11 +219,16 @@ export default function AddPopup({
                 )}
               />
             </div>
-            <Button variant="contained" className="submitBtn" type="submit">
-              Add
-            </Button>
           </div>
         )}
+        <div className="submitBtn">
+          <Button variant="contained" type="submit" disabled={loading}>
+            Add{' '}
+            {loading && (
+              <CircularProgress size={30} style={{ marginLeft: '1rem' }} />
+            )}
+          </Button>
+        </div>
       </form>
     </Dialog>
   )

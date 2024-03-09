@@ -23,8 +23,11 @@ export default function Student() {
 
   const addNewStudent = async (classData) => {
     const obj = classData
-    obj['batches'] = selectedBatches.map((data) => data?._id)
-    obj['classId'] = selectedClass?._id
+    obj['batches'] = selectedBatches.map((data) => {
+      return { id: data?._id, title: data?.title }
+    })
+    obj['classId'] = { id: selectedClass?._id, title: selectedClass?.title }
+    obj['institute'] = currentUser?._id
     try {
       const apiOPtions = {
         method: 'POST',

@@ -52,10 +52,12 @@ export default function CommonTable({ head, rows, type,onEdit, onDelete, onView 
                       {row?.phone || '--'}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.class}
+                      {row?.classes?.title}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.batch}
+                      {row?.batches.length>0 &&
+                      row?.batches?.map((batch,i) => <span key={i}>{batch?.title}</span>)                      
+                      }
                     </TableCell>
                     <TableCell
                       style={{

@@ -14,14 +14,19 @@
     align-items: center;
     gap: 1rem;
   }
-  .submitBtn {
-    width: fit-content;
-    padding: 10px 50px;
-  }
+
   .subSection {
     display: flex;
     justify-content: center;
     width: 100%;
     gap: 1rem;
+  }
+}
+.submitBtn {
+  width: fit-content;
+  padding: 10px 50px;
+  margin: 10px auto;
+  button {
+    padding: 10px 50px;
   }
 }
