@@ -12,10 +12,12 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import "./table.scss";
-import { Block, Delete, Edit, RemoveRedEye } from "@mui/icons-material";
+import { Block, Delete, Edit } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
-export default function CommonTable({ head, rows, type,onEdit, onDelete, onView  }) {
+export default function CommonTable({ head, rows, type, onEdit, onDelete  }) {
+
+  console.log(rows)
 
   return (
     <TableContainer component={Paper} className="tableContainer">
@@ -32,7 +34,7 @@ export default function CommonTable({ head, rows, type,onEdit, onDelete, onView 
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows &&
+          {rows.length > 0 &&
             rows.map((row, i) => (
               <TableRow
                 key={i}
@@ -75,49 +77,45 @@ export default function CommonTable({ head, rows, type,onEdit, onDelete, onView 
                     </TableCell>
                   </>
                 )}
-                {type === "attendace" && (
+                {type === "attendance" && (
                   <>
                     <TableCell component="th" scope="row">
-                      {row?.id}
+                      {i+1}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.name}
+                      {row?.fullName}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.class}
+                      {row?.classes?.title}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.batch}
+                    {row?.batches.length>0 &&
+                      row?.batches?.map((batch,i) => <span key={i}>{batch?.title}</span>)                      
+                    }
                     </TableCell>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      style={{ display: "flex" }}
-                    >
-                      {row?.record.length > 0 &&
-                        row.record.map((val, i) => {
-                          return (
-                            <span
-                              key={i}
-                              className="record"
-                              style={{
-                                background:
-                                  val === "p"
-                                    ? "green"
-                                    : val === "ab"
-                                    ? "red"
-                                    : "gray",
-                              }}
-                            ></span>
-                          );
-                        })}
+                    <TableCell component="th" scope="row">
+                    {row?.attendance?.length>0 &&
+                          row?.attendance?.slice(0, -1).map(attendance => {
+                            const status = attendance?.batch[0]?.status;
+                        return(
+                            <span key={attendance._id}  className="attendanceStatus"
+                             style={{backgroundColor:status === 'ab'?'#ec5d77': status === 'p'?'#79B791':'gray'}}>
+                              {status}
+                              </span>
+                          )
+                        })
+                      }
                     </TableCell>
+                  
                     <TableCell>
                       <FormControl>
                         <RadioGroup
                           row
                           aria-labelledby="demo-row-radio-buttons-group-label"
                           name="row-radio-buttons-group"
+                          style={{display: 'flex', alignItems: 'center'}}
+                          onChange={(e) =>  onEdit(e.target.value, row?._id )}
+                          defaultValue={row?.attendance[row?.attendance.length-1]?.batch[0]?.status}
                         >
                           <FormControlLabel
                             value="p"
@@ -125,7 +123,7 @@ export default function CommonTable({ head, rows, type,onEdit, onDelete, onView 
                             label="P"
                           />
                           <FormControlLabel
-                            value="a"
+                            value="ab"
                             control={<Radio color="error" />}
                             label="A"
                           />

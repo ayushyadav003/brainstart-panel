@@ -19,6 +19,7 @@ const sidebarOptions = [
   { title: "Analytics", icon: <Dashboard />, link: "/analytics" },
   { title: "Classes", icon: <LibraryBooks />, link: "/classes" },
   { title: "Schedule", icon: <VideoCall />, link: "/scheduled-classes" },
+  { title: "Teachers", icon: <School />, link: "/teachers" },
   { title: "Students", icon: <School />, link: "/students" },
   { title: "Notes", icon: <Description />, link: "/notes" },
   { title: "Attendance", icon: <Ballot />, link: "/attendance" },

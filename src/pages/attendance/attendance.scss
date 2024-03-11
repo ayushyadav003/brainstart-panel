@@ -1,0 +1,21 @@
+.studentsContainer {
+  #addStudent {
+    padding: 10px 10px 0 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .studentWrapper {
+    padding: 20px;
+    overflow: auto;
+    // height: 80vh;
+  }
+  .popupBox {
+    width: 40vw;
+    display: flex;
+    background-color: red;
+    gap: 1rem;
+    padding: 30px;
+    justify-content: center;
+    align-items: center;
+  }
+}

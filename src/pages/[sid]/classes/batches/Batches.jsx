@@ -38,7 +38,7 @@ function Batches() {
         toast.success(response?.message)
         setAllBatches(false)
         setAddBatch(false)
-        getAllBatches()
+        getAllBatches(currentUser?._id)
       }
     } catch (error) {
       toast.warning(error?.response?.data?.message)

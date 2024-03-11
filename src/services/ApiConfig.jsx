@@ -16,4 +16,5 @@ export const apiConfig = {
 
   //students
   student: `${apiUrl}/students`,
+  attendance: `${apiUrl}/students/attendance`,
 }

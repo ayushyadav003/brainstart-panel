@@ -1,49 +1,23 @@
 import { useEffect, useState } from 'react'
-import { Button } from '@mui/material'
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
 import { apiConfig } from '../../services/ApiConfig'
-import AddPopup from '../../components/addPopup/AddPopup'
 import Filter from '../../components/filter/Filter'
 import CommonTable from '../../components/table/Table'
-import './students.scss'
+import './attendance.scss'
 import { useSelector } from 'react-redux'
 import { ApiWithToken } from '../../services/ApiWithToken'
-import { toast } from 'react-toastify'
 
-export default function Student() {
-  const [addStudent, setAddStudent] = useState(false)
+export default function Attendace() {
   const [allStudents, setAllStudents] = useState([])
-  const [selectClasses, setSelectClasses] = useState([])
   const [selectBatches, setSelectBatches] = useState([])
   const [selectedClass, setSelectedClass] = useState('')
-  const [selectedBatches, setSelectedBatches] = useState('')
   const [filter, setFilter] = useState({ search: '', class: null, batch: null })
   const { currentUser } = useSelector((state) => state.user)
+  dayjs.extend(localizedFormat)
+  const today = dayjs()
 
-  const header = ['Sno.', 'Name', 'Email', 'Phone', 'Class', 'Batch']
-
-  const addNewStudent = async (classData) => {
-    const obj = classData
-    obj['batches'] = selectedBatches.map((data) => {
-      return { id: data?._id, title: data?.title }
-    })
-    obj['classId'] = { id: selectedClass?._id, title: selectedClass?.title }
-    obj['institute'] = currentUser?._id
-    try {
-      const apiOPtions = {
-        method: 'POST',
-        url: apiConfig.student,
-        data: obj,
-      }
-      const response = await ApiWithToken(apiOPtions)
-      if (response?.statusCode === 201) {
-        toast.success(response?.message)
-        setAddStudent(false)
-        getAllStudents()
-      }
-    } catch (error) {
-      toast.warning(error?.response?.data?.message)
-    }
-  }
+  const header = ['Sno.', 'Name', 'Class', 'Batches', 'Last 10', 'Today']
 
   const getAllStudents = async () => {
     try {
@@ -52,25 +26,23 @@ export default function Student() {
         url: apiConfig.student,
         params: {
           institute: currentUser?._id,
-          classId: filter?.class,
-          batchId: filter?.batch,
+          classId: filter.class,
+          batchId: filter.batch,
         },
       }
       const response = await ApiWithToken(apiOPtions)
-
       if (response?.statusCode === 200) {
         console.log(response)
         setAllStudents(response?.student)
       }
     } catch (error) {
       setAllStudents([])
-
       // toast.warning(error?.response?.data?.message);
     }
   }
 
   useEffect(() => {
-    if (currentUser?._id) {
+    if (currentUser?._id && filter.class && filter.batch) {
       getAllStudents()
     }
   }, [currentUser, filter])
@@ -85,7 +57,7 @@ export default function Student() {
       const response = await ApiWithToken(apiOPtions)
 
       if (response?.statusCode === 200) {
-        setSelectClasses(response?.classes)
+        setSelectedClass(response?.classes)
       }
     } catch (error) {
       // toast.warning(error?.response?.data?.message);
@@ -96,10 +68,7 @@ export default function Student() {
       const apiOPtions = {
         method: 'GET',
         url: apiConfig.batch,
-        params: {
-          institute: currentUser?._id,
-          classId: selectedClass?._id || filter?.class,
-        },
+        params: { institute: currentUser?._id, classId: filter?.class },
       }
       const response = await ApiWithToken(apiOPtions)
 
@@ -115,44 +84,59 @@ export default function Student() {
     if (currentUser?._id) {
       getAllClasses()
     }
-  }, [currentUser])
+  }, [currentUser, filter.class])
 
   useEffect(() => {
-    if (selectedClass || filter.class) {
+    if (filter.class) {
       getAllBatches()
     }
-  }, [selectedClass, filter.class])
+  }, [filter.class])
+
+  const onAttendanceChange = async (val, studenId) => {
+    const attendanceObj = {
+      studenId,
+      date: today.format('dddd, LL'),
+      batch: {
+        batchId: '65d4f1e4fb7aa98851f84154',
+        status: val,
+      },
+    }
+    try {
+      const apiOPtions = {
+        method: 'POST',
+        url: apiConfig.attendance,
+        data: attendanceObj,
+      }
+      const response = await ApiWithToken(apiOPtions)
+
+      if (response?.statusCode === 200) {
+        setSelectBatches(response?.batches)
+      }
+    } catch (error) {
+      // toast.warning(error?.response?.data?.message)
+    }
+  }
 
   return (
     <div className="studentsContainer">
-      <AddPopup
-        type="students"
-        open={addStudent}
-        setOpen={setAddStudent}
-        onSubmit={(classData) => addNewStudent(classData)}
-        classes={selectClasses}
-        setSelectedClass={setSelectedClass}
-        selectBatches={selectBatches}
-        setSelectedBatches={setSelectedBatches}
-      />
       <Filter
         showBack={false}
         heading="All Students"
-        type="student"
+        type="students"
         showClass={true}
         showBatch={true}
-        classes={selectClasses}
+        classes={selectedClass}
         batches={selectBatches}
         filter={filter}
         setFilter={setFilter}
       />
-      <div id="addStudent">
-        <Button variant="contained" onClick={() => setAddStudent(true)}>
-          Add New Student
-        </Button>
-      </div>
       <div className="studentWrapper">
-        <CommonTable head={header} rows={allStudents} type="students" />
+        <CommonTable
+          head={header}
+          onEdit={onAttendanceChange}
+          rows={allStudents}
+          type="attendance"
+        />
       </div>
     </div>
   )

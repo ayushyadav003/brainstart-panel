@@ -10,6 +10,8 @@ import ScheduledClass from '../pages/scheduledClasses'
 import Notes from '../pages/[sid]/notes/Notes'
 import UpdateNotes from '../pages/[sid]/notes/updateNotes/UpdateNotes'
 import Support from '../pages/support/Support'
+import Teacher from '../pages/teachers/Teachers'
+import Attendace from '../pages/attendance/Attendance'
 
 export default function Router() {
   return (
@@ -60,6 +62,22 @@ export default function Router() {
           element={
             <TeacherLayout>
               <Student />
+            </TeacherLayout>
+          }
+        />
+        <Route
+          path="/teachers"
+          element={
+            <TeacherLayout>
+              <Teacher />
+            </TeacherLayout>
+          }
+        />
+        <Route
+          path="/attendance"
+          element={
+            <TeacherLayout>
+              <Attendace />
             </TeacherLayout>
           }
         />

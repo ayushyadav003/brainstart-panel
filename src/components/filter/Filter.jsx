@@ -6,55 +6,56 @@ import {
   Select,
   TextField,
   useMediaQuery,
-} from "@mui/material";
-import { ArrowBack, Search } from "@mui/icons-material";
-import "./filter.scss";
-import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
+} from '@mui/material'
+import { ArrowBack, Search } from '@mui/icons-material'
+import './filter.scss'
+import { useNavigate } from 'react-router-dom'
+import { useRef, useState } from 'react'
+import CloseIcon from '@mui/icons-material/Close'
 export default function Filter({
   showBack,
   showClass,
   showBatch,
   heading,
+  classes,
+  batches,
   type,
   hideSearch,
   filter,
   setFilter,
 }) {
-  const navigate = useNavigate();
-  const [searchBarOpen, setSearchBarOpen] = useState(false);
-  const searchBarRef = useRef();
-  const matches = useMediaQuery("(max-width: 768px)");
+  const navigate = useNavigate()
+  const [searchBarOpen, setSearchBarOpen] = useState(false)
+  const searchBarRef = useRef()
+  const matches = useMediaQuery('(max-width: 768px)')
   const handleChange = (e) => {
-    setFilter({ ...filter, [e.target.name]: e.target.value });
-  };
+    setFilter({ ...filter, [e.target.name]: e.target.value })
+  }
   const searchBarPlaceholder = () => {
     switch (type) {
-      case "classes":
-        return "Class Name";
-      case "students":
-        return "Name/ Email/ Phone";
-      case "batches":
-        return "Batch name";
+      case 'classes':
+        return 'Class Name'
+      case 'students':
+        return 'Name/ Email/ Phone'
+      case 'batches':
+        return 'Batch name'
       default:
-        return "Search here...";
+        return 'Search here...'
     }
-  };
+  }
   const searchBarHandler = () => {
     if (searchBarRef?.current) {
-      searchBarRef?.current?.focus();
-      setSearchBarOpen((e) => !e);
+      searchBarRef?.current?.focus()
+      setSearchBarOpen((e) => !e)
     }
-  };
-
+  }
   return (
     <div className="filterContainer">
       <div className="heading">
         {showBack && (
           <ArrowBack
             onClick={() => navigate(-1)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           />
         )}
         <h1>{heading}</h1>
@@ -72,7 +73,7 @@ export default function Filter({
       </div>
       <div
         className={
-          matches ? (searchBarOpen ? "filterOpen" : "filter") : "filter"
+          matches ? (searchBarOpen ? 'filterOpen' : 'filter') : 'filter'
         }
         // onBlur={() => {
         //   setSearchBarOpen(false);
@@ -100,20 +101,22 @@ export default function Filter({
           <div className="dropDown">
             <Select
               id="demo-simple-select"
-              value={""}
-              // label="Age"
+              defaultValue={filter?.class}
               name="class"
               displayEmpty
               fullWidth
               size="small"
               onChange={handleChange}
             >
-              <MenuItem value="" disabled>
+              <MenuItem value={null} disabled>
                 Select Class
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {classes.length > 0 &&
+                classes.map((classItem) => (
+                  <MenuItem value={classItem?._id} key={classItem?._id}>
+                    {classItem?.title}
+                  </MenuItem>
+                ))}
             </Select>
           </div>
         )}
@@ -121,7 +124,7 @@ export default function Filter({
           <div className="dropDown">
             <Select
               id="demo-simple-select"
-              value={""}
+              defaultValue={null}
               // label="Age"
               displayEmpty
               name="batch"
@@ -129,16 +132,25 @@ export default function Filter({
               size="small"
               onChange={handleChange}
             >
-              <MenuItem value="" disabled>
+              <MenuItem value={filter?.batch} disabled>
                 Select Batch
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {batches.length > 0 ?
+                batches.map((batchItem) => (
+                  <MenuItem value={batchItem?._id} key={batchItem?._id}>
+                    {batchItem?.title}
+                  </MenuItem>
+                ))
+                :
+                <MenuItem value="0" disabled>
+                Select Class First
+              </MenuItem>
+              }
+
             </Select>
           </div>
         )}
       </div>
     </div>
-  );
+  )
 }

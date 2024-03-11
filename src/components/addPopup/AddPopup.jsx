@@ -221,14 +221,67 @@ export default function AddPopup({
             </div>
           </div>
         )}
-        <div className="submitBtn">
-          <Button variant="contained" type="submit" disabled={loading}>
-            Add{' '}
-            {loading && (
-              <CircularProgress size={30} style={{ marginLeft: '1rem' }} />
-            )}
-          </Button>
-        </div>
+
+        {type === 'teacher' && (
+          <div className="popupBox">
+            <h2>Add New Teacher</h2>
+            <div className="subSection">
+              <TextField
+                placeholder="Fullname"
+                {...register('fullName')}
+                required
+                className="field"
+                fullWidth
+              />
+
+              <TextField
+                placeholder="Phone"
+                {...register('phone')}
+                className="field"
+                fullWidth
+              />
+            </div>
+            <div className="subSection">
+              {' '}
+              <TextField
+                placeholder="Email"
+                required
+                {...register('email')}
+                className="field"
+                fullWidth
+              />
+            </div>
+            <div className="subSection">
+              <Autocomplete
+                id="tags-outlined"
+                options={classes}
+                fullWidth
+                {...register('classId')}
+                onChange={(e, value) => setSelectedClass(value)}
+                getOptionLabel={(option) => option.title}
+                filterSelectedOptions
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="Select Classes" />
+                )}
+              />
+              <Autocomplete
+                multiple
+                id="tags-outlined2 "
+                options={selectBatches}
+                fullWidth
+                getOptionLabel={(option) => option.title}
+                filterSelectedOptions
+                onChange={(e, value) => setSelectedBatches(value)}
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="Select Batches" />
+                )}
+              />
+            </div>
+            <Button variant="contained" className="submitBtn" type="submit">
+              Add
+            </Button>
+          </div>
+        )}
       </form>
     </Dialog>
   )
