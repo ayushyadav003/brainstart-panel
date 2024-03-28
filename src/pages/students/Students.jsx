@@ -75,54 +75,6 @@ export default function Student() {
     }
   }, [currentUser, filter])
 
-  const getAllClasses = async () => {
-    try {
-      const apiOPtions = {
-        method: 'GET',
-        url: apiConfig.class,
-        params: { institute: currentUser?._id },
-      }
-      const response = await ApiWithToken(apiOPtions)
-
-      if (response?.statusCode === 200) {
-        setSelectClasses(response?.classes)
-      }
-    } catch (error) {
-      // toast.warning(error?.response?.data?.message);
-    }
-  }
-  const getAllBatches = async () => {
-    try {
-      const apiOPtions = {
-        method: 'GET',
-        url: apiConfig.batch,
-        params: {
-          institute: currentUser?._id,
-          classId: selectedClass?._id || filter?.class,
-        },
-      }
-      const response = await ApiWithToken(apiOPtions)
-
-      if (response?.statusCode === 200) {
-        setSelectBatches(response?.batches)
-      }
-    } catch (error) {
-      // toast.warning(error?.response?.data?.message)
-    }
-  }
-
-  useEffect(() => {
-    if (currentUser?._id) {
-      getAllClasses()
-    }
-  }, [currentUser])
-
-  useEffect(() => {
-    if (selectedClass || filter.class) {
-      getAllBatches()
-    }
-  }, [selectedClass, filter.class])
-
   return (
     <div className="studentsContainer">
       <AddPopup
@@ -141,8 +93,6 @@ export default function Student() {
         type="student"
         showClass={true}
         showBatch={true}
-        classes={selectClasses}
-        batches={selectBatches}
         filter={filter}
         setFilter={setFilter}
       />

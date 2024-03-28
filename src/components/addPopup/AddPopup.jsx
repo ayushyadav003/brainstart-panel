@@ -219,6 +219,9 @@ export default function AddPopup({
                 )}
               />
             </div>
+            <Button variant="contained" className="submitBtn" type="submit">
+              Add
+            </Button>
           </div>
         )}
 
