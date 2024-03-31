@@ -72,7 +72,7 @@ export default function CommonTable({ head, rows, type, onEdit, onDelete  }) {
                         <Edit fontSize="small" onClick={onEdit} />
                       </span>
                       <span className="icon">
-                        <Delete fontSize="small" onClick={onDelete} />
+                        <Delete fontSize="small" onClick={()=>onDelete(row)} />
                       </span>
                     </TableCell>
                   </>

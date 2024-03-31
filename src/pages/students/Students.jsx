@@ -12,22 +12,23 @@ import { toast } from 'react-toastify'
 export default function Student() {
   const [addStudent, setAddStudent] = useState(false)
   const [allStudents, setAllStudents] = useState([])
-  const [selectClasses, setSelectClasses] = useState([])
-  const [selectBatches, setSelectBatches] = useState([])
-  const [selectedClass, setSelectedClass] = useState('')
-  const [selectedBatches, setSelectedBatches] = useState('')
   const [filter, setFilter] = useState({ search: '', class: null, batch: null })
   const { currentUser } = useSelector((state) => state.user)
 
   const header = ['Sno.', 'Name', 'Email', 'Phone', 'Class', 'Batch']
 
   const addNewStudent = async (classData) => {
+    console.log(classData)
     const obj = classData
-    obj['batches'] = selectedBatches.map((data) => {
+    obj['batches'] = classData?.batches.map((data) => {
       return { id: data?._id, title: data?.title }
     })
-    obj['classId'] = { id: selectedClass?._id, title: selectedClass?.title }
+    obj['classes'] = {
+      id: classData?.classes.id,
+      title: classData?.classes?.title,
+    }
     obj['institute'] = currentUser?._id
+    obj['teacherId'] = localStorage.getItem('userId') || 'admin'
     try {
       const apiOPtions = {
         method: 'POST',
@@ -52,6 +53,7 @@ export default function Student() {
         url: apiConfig.student,
         params: {
           institute: currentUser?._id,
+          teacherId: localStorage.getItem('userId') || 'admin',
           classId: filter?.class,
           batchId: filter?.batch,
         },
@@ -69,6 +71,24 @@ export default function Student() {
     }
   }
 
+  const handleDeteleStudent = async (student) => {
+    try {
+      const apiOPtions = {
+        method: 'Delete',
+        url: apiConfig.student,
+        data: { studentId: student?._id },
+      }
+      const response = await ApiWithToken(apiOPtions)
+
+      if (response?.statusCode === 200) {
+        toast.success(response.message || 'Student deleted successfully')
+        getAllStudents()
+      }
+    } catch (error) {
+      toast.warning(error?.response?.data?.message || 'Something went wrong! ')
+    }
+  }
+
   useEffect(() => {
     if (currentUser?._id) {
       getAllStudents()
@@ -82,10 +102,6 @@ export default function Student() {
         open={addStudent}
         setOpen={setAddStudent}
         onSubmit={(classData) => addNewStudent(classData)}
-        classes={selectClasses}
-        setSelectedClass={setSelectedClass}
-        selectBatches={selectBatches}
-        setSelectedBatches={setSelectedBatches}
       />
       <Filter
         showBack={false}
@@ -102,7 +118,12 @@ export default function Student() {
         </Button>
       </div>
       <div className="studentWrapper">
-        <CommonTable head={header} rows={allStudents} type="students" />
+        <CommonTable
+          head={header}
+          rows={allStudents}
+          type="students"
+          onDelete={handleDeteleStudent}
+        />
       </div>
     </div>
   )

@@ -12,6 +12,7 @@ import UpdateNotes from '../pages/[sid]/notes/updateNotes/UpdateNotes'
 import Support from '../pages/support/Support'
 import Teacher from '../pages/teachers/Teachers'
 import Attendace from '../pages/attendance/Attendance'
+import Teachers from '../pages/teachers/Teachers'
 
 export default function Router() {
   return (
@@ -86,6 +87,14 @@ export default function Router() {
           element={
             <TeacherLayout>
               <Batches />
+            </TeacherLayout>
+          }
+        />
+        <Route
+          path="/teachers"
+          element={
+            <TeacherLayout>
+              <Teachers />
             </TeacherLayout>
           }
         />

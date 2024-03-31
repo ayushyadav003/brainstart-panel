@@ -8,26 +8,24 @@ import './addPopup.scss'
 import {
   Autocomplete,
   Button,
-  CircularProgress,
+  // CircularProgress,
   InputAdornment,
   TextField,
 } from '@mui/material'
 import { Close, CurrencyRupee } from '@mui/icons-material'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { apiConfig } from '../../services/ApiConfig'
+import { useSelector } from 'react-redux'
+import { ApiWithToken } from '../../services/ApiWithToken'
 
-export default function AddPopup({
-  type,
-  open,
-  setOpen,
-  onSubmit,
-  classes,
-  setSelectedClass,
-  selectBatches,
-  setSelectedBatches,
-}) {
-  const { register, handleSubmit, reset } = useForm()
+export default function AddPopup({ type, open, setOpen, onSubmit }) {
+  const { register, handleSubmit, reset, setValue } = useForm()
   const [loading, setLoading] = useState(false)
+  const { currentUser } = useSelector((state) => state.user)
+  const [classes, setClasses] = useState([])
+  const [selectedClass, setSelectedClass] = useState(null)
+  const [batches, setBatches] = useState([])
 
   const handleClose = () => {
     setOpen(false)
@@ -38,6 +36,48 @@ export default function AddPopup({
     await onSubmit(data, reset)
     setLoading(false)
   }
+
+  const getAllClasses = async () => {
+    try {
+      const apiOPtions = {
+        method: 'GET',
+        url: apiConfig.class,
+        params: { institute: currentUser?._id },
+      }
+      const response = await ApiWithToken(apiOPtions)
+
+      if (response?.statusCode === 200) {
+        setClasses(response?.classes)
+      }
+    } catch (error) {
+      // toast.warning(error?.response?.data?.message);
+    }
+  }
+  const getAllBatches = async () => {
+    try {
+      const apiOPtions = {
+        method: 'GET',
+        url: apiConfig.batch,
+        params: {
+          institute: currentUser?._id,
+          classId: selectedClass?._id,
+        },
+      }
+      const response = await ApiWithToken(apiOPtions)
+
+      if (response?.statusCode === 200) {
+        setBatches(response?.batches)
+      }
+    } catch (error) {
+      // toast.warning(error?.response?.data?.message)
+    }
+  }
+
+  useEffect(() => {
+    if (selectedClass) {
+      getAllBatches()
+    }
+  }, [selectedClass])
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth={false}>
@@ -197,9 +237,13 @@ export default function AddPopup({
               <Autocomplete
                 id="tags-outlined"
                 options={classes}
+                onOpen={getAllClasses}
                 fullWidth
-                {...register('classId')}
-                onChange={(e, value) => setSelectedClass(value)}
+                onChange={(e, value) => {
+                  console.log(value)
+                  setSelectedClass(value)
+                  setValue('classes', { id: value?._id, title: value?.title })
+                }}
                 getOptionLabel={(option) => option.title}
                 filterSelectedOptions
                 renderInput={(params) => (
@@ -209,13 +253,15 @@ export default function AddPopup({
               <Autocomplete
                 multiple
                 id="tags-outlined2"
-                options={selectBatches}
+                options={batches}
                 fullWidth
                 getOptionLabel={(option) => option.title}
                 filterSelectedOptions
-                onChange={(e, value) => setSelectedBatches(value)}
+                onChange={(e, value) => {
+                  setValue('batches', value)
+                }}
                 renderInput={(params) => (
-                  <TextField {...params} placeholder="Select Class" />
+                  <TextField {...params} placeholder="Select Batches" />
                 )}
               />
             </div>
@@ -270,11 +316,11 @@ export default function AddPopup({
               <Autocomplete
                 multiple
                 id="tags-outlined2 "
-                options={selectBatches}
+                options={batches}
                 fullWidth
                 getOptionLabel={(option) => option.title}
                 filterSelectedOptions
-                onChange={(e, value) => setSelectedBatches(value)}
+                onChange={(e, value) => setSelectedClass(value)}
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Select Batches" />
                 )}

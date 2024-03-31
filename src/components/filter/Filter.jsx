@@ -90,11 +90,6 @@ export default function Filter({
     }
   }
 
-  useEffect(() => {
-    if (currentUser?._id) {
-      getAllClasses()
-    }
-  }, [currentUser])
 
   useEffect(() => {
     if (filter.class) {
@@ -159,6 +154,7 @@ export default function Filter({
               displayEmpty
               fullWidth
               size="small"
+              onOpen={getAllClasses}
               onChange={handleChange}
             >
               <MenuItem value={null} disabled>
@@ -178,8 +174,8 @@ export default function Filter({
             <Select
               id="demo-simple-select"
               defaultValue={null}
-              // label="Age"
               displayEmpty
+              // onOpen={getAllBatches} 
               name="batch"
               fullWidth
               size="small"
