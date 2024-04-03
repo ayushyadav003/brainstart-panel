@@ -149,7 +149,7 @@ export default function Login() {
           type="submit"
           disabled={loading}
         >
-          Sign up
+          Sign in
           {loading && (
             <CircularProgress size={30} style={{ marginLeft: '1rem' }} />
           )}

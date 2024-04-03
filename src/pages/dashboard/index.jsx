@@ -1,4 +1,4 @@
-import DoughnutChart from '../../components/Charts/DoughnutChart'
+// import DoughnutChart from '../../components/Charts/DoughnutChart'
 import LineChart from '../../components/Charts/LineChart'
 import './dashboard.scss'
 
@@ -7,8 +7,8 @@ function Dashboard() {
     <div className="dashboardContainer">
       <div className="inner1">
         <div className="chartWrapper">
-<LineChart />
-{/* <DoughnutChart /> */}
+          {/* <LineChart /> */}
+          {/* <DoughnutChart /> */}
         </div>
       </div>
     </div>

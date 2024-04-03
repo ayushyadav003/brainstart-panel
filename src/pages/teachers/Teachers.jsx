@@ -33,7 +33,7 @@ export default function Teachers() {
     try {
       const apiOPtions = {
         method: 'POST',
-        url: apiConfig.student,
+        url: apiConfig.teacher,
         data: obj,
       }
       const response = await ApiWithToken(apiOPtions)
@@ -99,7 +99,7 @@ export default function Teachers() {
   return (
     <div className="studentsContainer">
       <AddPopup
-        type="students"
+        type="teacher"
         open={addStudent}
         setOpen={setAddStudent}
         onSubmit={(classData) => addNewStudent(classData)}
@@ -119,17 +119,13 @@ export default function Teachers() {
         </Button>
       </div>
       <div className="studentWrapper">
-
-          <CommonTable
-            head={header}
-            rows={allStudents}
-            type="students"
-            onDelete={handleDeteleStudent}
-          />
-                  {
-          allStudents.length<=0 &&
-          <NoData />
-        }
+        <CommonTable
+          head={header}
+          rows={allStudents}
+          type="students"
+          onDelete={handleDeteleStudent}
+        />
+        {allStudents.length <= 0 && <NoData />}
       </div>
     </div>
   )
