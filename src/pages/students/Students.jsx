@@ -8,6 +8,7 @@ import './students.scss'
 import { useSelector } from 'react-redux'
 import { ApiWithToken } from '../../services/ApiWithToken'
 import { toast } from 'react-toastify'
+import NoData from '../../components/noData/NoData'
 
 export default function Student() {
   const [addStudent, setAddStudent] = useState(false)
@@ -124,6 +125,10 @@ export default function Student() {
           type="students"
           onDelete={handleDeteleStudent}
         />
+                          {
+          allStudents.length<=0 &&
+          <NoData />
+        }
       </div>
     </div>
   )

@@ -7,6 +7,7 @@ import CommonTable from '../../components/table/Table'
 import './attendance.scss'
 import { useSelector } from 'react-redux'
 import { ApiWithToken } from '../../services/ApiWithToken'
+import NoData from '../../components/noData/NoData'
 
 export default function Attendace() {
   const [allStudents, setAllStudents] = useState([])
@@ -47,50 +48,6 @@ export default function Attendace() {
     }
   }, [currentUser, filter])
 
-  const getAllClasses = async () => {
-    try {
-      const apiOPtions = {
-        method: 'GET',
-        url: apiConfig.class,
-        params: { institute: currentUser?._id },
-      }
-      const response = await ApiWithToken(apiOPtions)
-
-      if (response?.statusCode === 200) {
-        setSelectedClass(response?.classes)
-      }
-    } catch (error) {
-      // toast.warning(error?.response?.data?.message);
-    }
-  }
-  const getAllBatches = async () => {
-    try {
-      const apiOPtions = {
-        method: 'GET',
-        url: apiConfig.batch,
-        params: { institute: currentUser?._id, classId: filter?.class },
-      }
-      const response = await ApiWithToken(apiOPtions)
-
-      if (response?.statusCode === 200) {
-        setSelectBatches(response?.batches)
-      }
-    } catch (error) {
-      // toast.warning(error?.response?.data?.message)
-    }
-  }
-
-  useEffect(() => {
-    if (currentUser?._id) {
-      getAllClasses()
-    }
-  }, [currentUser, filter.class])
-
-  useEffect(() => {
-    if (filter.class) {
-      getAllBatches()
-    }
-  }, [filter.class])
 
   const onAttendanceChange = async (val, studenId) => {
     const attendanceObj = {
@@ -125,8 +82,6 @@ export default function Attendace() {
         type="students"
         showClass={true}
         showBatch={true}
-        classes={selectedClass}
-        batches={selectBatches}
         filter={filter}
         setFilter={setFilter}
       />
@@ -137,6 +92,10 @@ export default function Attendace() {
           rows={allStudents}
           type="attendance"
         />
+                                  {
+          allStudents.length<=0 &&
+          <NoData />
+        }
       </div>
     </div>
   )

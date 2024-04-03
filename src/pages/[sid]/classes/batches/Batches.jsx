@@ -8,6 +8,8 @@ import { apiConfig } from '../../../../services/ApiConfig'
 import { toast } from 'react-toastify'
 import { ApiWithToken } from '../../../../services/ApiWithToken'
 import { useSelector } from 'react-redux'
+import NoData from '../../../../components/noData/NoData'
+import { Tooltip } from '@mui/material'
 // import { Divider } from '@mui/material'
 
 function Batches() {
@@ -79,10 +81,12 @@ function Batches() {
         setFilter={setFilter}
       />
       <div className="cardsWrapper">
+      <Tooltip title="Add new batch">
         <div className="cardWrapper addCard" onClick={() => setAddBatch(true)}>
           <Add fontSize="large" />
         </div>
-        {allBatches.length > 0 &&
+        </Tooltip>
+        {allBatches.length > 0 ?
           allBatches.map((classInfo, i) => (
             <div
               key={i}
@@ -103,7 +107,8 @@ function Batches() {
                 Details <KeyboardDoubleArrowRight />
               </div>
             </div>
-          ))}
+          )):<NoData />
+        }
       </div>
 
       <AddPopup

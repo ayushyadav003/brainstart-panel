@@ -92,10 +92,10 @@ export default function Filter({
 
 
   useEffect(() => {
-    if (filter.class) {
+    if (filter?.class) {
       getAllBatches()
     }
-  }, [filter.class])
+  }, [filter?.class])
 
   return (
     <div className="filterContainer">

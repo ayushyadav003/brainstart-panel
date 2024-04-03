@@ -29,6 +29,8 @@ export default function UpdateNotes() {
         heading={"Notes"}
         hideSearch={true}
         type={"notes"}
+        showClass={false}
+        showBatch={false}
       />
       <div className="indexingWrapper">
         <TextField

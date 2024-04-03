@@ -5,9 +5,12 @@ import { Add, KeyboardDoubleArrowRight } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import Filter from '../../../components/filter/Filter'
 import { apiConfig } from '../../../services/ApiConfig'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ApiWithToken } from '../../../services/ApiWithToken'
 import { toast } from 'react-toastify'
+import NoData from '../../../components/noData/NoData'
+import { Tooltip } from '@mui/material'
+import { setCurrentClass } from '../../../redux/features/CurrentDetailsSlice'
 
 const classes = ['#ce796b', '#7a6038', '#7e4b34']
 
@@ -16,6 +19,7 @@ function Classes() {
   const [filter, setFilter] = useState({ search: '' })
   const [allClasses, setAllClasses] = useState([])
   const navigate = useNavigate()
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user)
 
   const addNewClass = async (classData) => {
@@ -56,7 +60,7 @@ function Classes() {
         setAllClasses(response?.classes)
       }
     } catch (error) {
-      toast.warning(error?.response?.data?.message)
+      // toast.warning(error?.response?.data?.message)
     }
   }
 
@@ -76,9 +80,11 @@ function Classes() {
         setFilter={setFilter}
       />
       <div className="cardsWrapper">
+    <Tooltip title="Add new class">
         <div className="cardWrapper addCard" onClick={() => setAddClass(true)}>
           <Add fontSize="large" />
         </div>
+        </Tooltip>
         {allClasses?.length > 0
           ? allClasses.map((classInfo, i) => {
               return (
@@ -90,19 +96,19 @@ function Classes() {
                   }}
                 >
                   <p> {classInfo.title}</p>
-                  <span> Total Students : 10</span>
+                  <span> Total Students : 0</span>
                   <div
                     style={{
                       background: classes[2],
                     }}
-                    onClick={() => navigate(`${classInfo._id}/batches`)}
+                    onClick={() => {navigate(`${classInfo._id}/batches`); dispatch(setCurrentClass({id:classInfo?._id,title:classInfo?.title}))}}
                   >
                     Batches <KeyboardDoubleArrowRight />
                   </div>
                 </div>
               )
             })
-          : 'Please add classes'}
+          : <NoData />}
       </div>
 
       <AddPopup

@@ -8,6 +8,7 @@ import './teachers.scss'
 import { useSelector } from 'react-redux'
 import { ApiWithToken } from '../../services/ApiWithToken'
 import { toast } from 'react-toastify'
+import NoData from '../../components/noData/NoData'
 
 export default function Teachers() {
   const [addStudent, setAddStudent] = useState(false)
@@ -114,16 +115,21 @@ export default function Teachers() {
       />
       <div id="addStudent">
         <Button variant="contained" onClick={() => setAddStudent(true)}>
-          Add New Student
+          Add New Teacher
         </Button>
       </div>
       <div className="studentWrapper">
-        <CommonTable
-          head={header}
-          rows={allStudents}
-          type="students"
-          onDelete={handleDeteleStudent}
-        />
+
+          <CommonTable
+            head={header}
+            rows={allStudents}
+            type="students"
+            onDelete={handleDeteleStudent}
+          />
+                  {
+          allStudents.length<=0 &&
+          <NoData />
+        }
       </div>
     </div>
   )

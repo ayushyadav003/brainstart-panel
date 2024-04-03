@@ -8,10 +8,12 @@ import AddPopup from '../../components/addPopup/AddPopup'
 import { toast } from 'react-toastify'
 import { apiConfig } from '../../services/ApiConfig'
 import { ApiWithToken } from '../../services/ApiWithToken'
+import { useSelector } from 'react-redux'
 
 export default function ScheduledClass() {
   const [addMeeting, setAddMeeting] = useState(false)
   const { currentUser } = useSelector((state) => state.user)
+  const [filter, setFilter]  = useState({class:null, batch:null, search:''})
 
   const addNewClass = async (classData) => {
     console.log(classData)
@@ -19,7 +21,7 @@ export default function ScheduledClass() {
     try {
       const apiOPtions = {
         method: 'POST',
-        url: apiConfig.class,
+        url: apiConfig?.class,
         data: { title: classData.title, institute: currentUser?._id },
       }
       const response = await ApiWithToken(apiOPtions)
@@ -58,7 +60,11 @@ export default function ScheduledClass() {
   }, [currentUser])
   return (
     <div className="scheduleContainer">
-      <Filter type="schedule" heading="Classes Scheduled" />
+      <Filter type="schedule" heading="Classes Scheduled"         showBack={false}
+        showClass={true}
+        showBatch={true}
+        filter={filter}
+        setFilter={setFilter} />
       <div className="Scheduletable">
         <div className="card addCard" onClick={() => setAddMeeting(true)}>
           <Add fontSize="large" />
