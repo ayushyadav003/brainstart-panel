@@ -11,14 +11,14 @@ import { toast } from 'react-toastify'
 import NoData from '../../components/noData/NoData'
 
 export default function Teachers() {
-  const [addStudent, setAddStudent] = useState(false)
-  const [allStudents, setAllStudents] = useState([])
+  const [addTeacher, setAddTeacher] = useState(false)
+  const [allTeachers, setAllTeachers] = useState([])
   const [filter, setFilter] = useState({ search: '', class: null, batch: null })
   const { currentUser } = useSelector((state) => state.user)
 
   const header = ['Sno.', 'Name', 'Email', 'Phone', 'Class', 'Batch']
 
-  const addNewStudent = async (classData) => {
+  const addNewTeacher = async (classData) => {
     console.log(classData)
     const obj = classData
     obj['batches'] = classData?.batches.map((data) => {
@@ -29,7 +29,7 @@ export default function Teachers() {
       title: classData?.classes?.title,
     }
     obj['institute'] = currentUser?._id
-    obj['teacherId'] = localStorage.getItem('userId') || 'admin'
+    // obj['teacherId'] = localStorage.getItem('userId') || 'admin'
     try {
       const apiOPtions = {
         method: 'POST',
@@ -39,22 +39,21 @@ export default function Teachers() {
       const response = await ApiWithToken(apiOPtions)
       if (response?.statusCode === 201) {
         toast.success(response?.message)
-        setAddStudent(false)
-        getAllStudents()
+        setAddTeacher(false)
+        getAllTeacher()
       }
     } catch (error) {
       toast.warning(error?.response?.data?.message)
     }
   }
 
-  const getAllStudents = async () => {
+  const getAllTeacher = async () => {
     try {
       const apiOPtions = {
         method: 'GET',
-        url: apiConfig.student,
+        url: apiConfig.register,
         params: {
           institute: currentUser?._id,
-          teacherId: localStorage.getItem('userId') || 'admin',
           classId: filter?.class,
           batchId: filter?.batch,
         },
@@ -63,11 +62,10 @@ export default function Teachers() {
 
       if (response?.statusCode === 200) {
         console.log(response)
-        setAllStudents(response?.student)
+        setAllTeachers(response?.student)
       }
     } catch (error) {
-      setAllStudents([])
-
+      setAllTeachers([])
       // toast.warning(error?.response?.data?.message);
     }
   }
@@ -83,7 +81,7 @@ export default function Teachers() {
 
       if (response?.statusCode === 200) {
         toast.success(response.message || 'Student deleted successfully')
-        getAllStudents()
+        getAllTeacher()
       }
     } catch (error) {
       toast.warning(error?.response?.data?.message || 'Something went wrong! ')
@@ -92,7 +90,7 @@ export default function Teachers() {
 
   useEffect(() => {
     if (currentUser?._id) {
-      getAllStudents()
+      getAllTeacher()
     }
   }, [currentUser, filter])
 
@@ -100,9 +98,9 @@ export default function Teachers() {
     <div className="studentsContainer">
       <AddPopup
         type="teacher"
-        open={addStudent}
-        setOpen={setAddStudent}
-        onSubmit={(classData) => addNewStudent(classData)}
+        open={addTeacher}
+        setOpen={setAddTeacher}
+        onSubmit={(classData) => addNewTeacher(classData)}
       />
       <Filter
         showBack={false}
@@ -113,19 +111,19 @@ export default function Teachers() {
         filter={filter}
         setFilter={setFilter}
       />
-      <div id="addStudent">
-        <Button variant="contained" onClick={() => setAddStudent(true)}>
+      <div id="addTeacher">
+        <Button variant="contained" onClick={() => setAddTeacher(true)}>
           Add New Teacher
         </Button>
       </div>
       <div className="studentWrapper">
         <CommonTable
           head={header}
-          rows={allStudents}
+          rows={allTeachers}
           type="students"
           onDelete={handleDeteleStudent}
         />
-        {allStudents.length <= 0 && <NoData />}
+        {allTeachers.length <= 0 && <NoData />}
       </div>
     </div>
   )

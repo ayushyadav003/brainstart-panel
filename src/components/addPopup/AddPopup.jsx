@@ -60,7 +60,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
         url: apiConfig.batch,
         params: {
           institute: currentUser?._id,
-          classId: selectedClass?._id,
+          classIds: selectedClass?._id,
         },
       }
       const response = await ApiWithToken(apiOPtions)
@@ -240,7 +240,6 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                 onOpen={getAllClasses}
                 fullWidth
                 onChange={(e, value) => {
-                  console.log(value)
                   setSelectedClass(value)
                   setValue('classes', { id: value?._id, title: value?.title })
                 }}
@@ -302,25 +301,30 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
             </div>
             <div className="subSection">
               <Autocomplete
-                id="tags-outlined"
+                multiple
+                id="tags-outlined2"
                 options={classes}
                 fullWidth
-                {...register('classId')}
-                onChange={(e, value) => setSelectedClass(value)}
                 getOptionLabel={(option) => option.title}
                 filterSelectedOptions
+                onOpen={getAllClasses}
+                onChange={(e, value) => {
+                  setValue('batches', value)
+                }}
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Select Classes" />
                 )}
               />
               <Autocomplete
                 multiple
-                id="tags-outlined2 "
+                id="tags-outlined2"
                 options={batches}
                 fullWidth
                 getOptionLabel={(option) => option.title}
                 filterSelectedOptions
-                onChange={(e, value) => setSelectedClass(value)}
+                onChange={(e, value) => {
+                  setValue('batches', value)
+                }}
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Select Batches" />
                 )}

@@ -4,7 +4,7 @@ const apiUrl = 'http://localhost:8000/api/v1'
 
 export const apiConfig = {
   //auth
-  register: `${apiUrl}/register`,
+  register: `${apiUrl}/users`,
   login: `${apiUrl}/auth`,
   refreshToken: `${apiUrl}/-`,
 
@@ -18,6 +18,5 @@ export const apiConfig = {
   student: `${apiUrl}/students`,
   attendance: `${apiUrl}/students/attendance`,
 
-  //teachers
-  teacher: `${apiUrl}/teachers`,
+  //users (admin and teacher)
 }
