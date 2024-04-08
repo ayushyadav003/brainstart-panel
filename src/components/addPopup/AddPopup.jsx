@@ -275,7 +275,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
             <h2>Add New Teacher</h2>
             <div className="subSection">
               <TextField
-                placeholder="Fullname"
+                placeholder="Full Name"
                 {...register('fullName')}
                 required
                 className="field"
@@ -290,7 +290,6 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
               />
             </div>
             <div className="subSection">
-              {' '}
               <TextField
                 placeholder="Email"
                 required
@@ -299,7 +298,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                 fullWidth
               />
             </div>
-            <div className="subSection">
+            {/* <div className="subSection">
               <Autocomplete
                 multiple
                 id="tags-outlined2"
@@ -309,7 +308,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                 filterSelectedOptions
                 onOpen={getAllClasses}
                 onChange={(e, value) => {
-                  setValue('batches', value)
+                  setValue('classes', value)
                 }}
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Select Classes" />
@@ -329,7 +328,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                   <TextField {...params} placeholder="Select Batches" />
                 )}
               />
-            </div>
+            </div> */}
             <Button variant="contained" className="submitBtn" type="submit">
               Add
             </Button>
