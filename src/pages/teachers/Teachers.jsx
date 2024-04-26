@@ -18,23 +18,18 @@ export default function Teachers() {
 
   const header = ['Sno.', 'Name', 'Email', 'Phone', 'Class', 'Batch']
 
-  const addNewTeacher = async (classData) => {
-    console.log(classData)
-    const obj = classData
-    obj['batches'] = classData?.batches.map((data) => {
-      return { id: data?._id, title: data?.title }
-    })
-    obj['classes'] = {
-      id: classData?.classes.id,
-      title: classData?.classes?.title,
-    }
-    obj['institute'] = currentUser?._id
-    // obj['teacherId'] = localStorage.getItem('userId') || 'admin'
+  const addNewTeacher = async (data) => {
+    console.log(data)
     try {
       const apiOPtions = {
         method: 'POST',
-        url: apiConfig.teacher,
-        data: obj,
+        url: apiConfig.register,
+        data: {
+          ...data,
+          instituteName: currentUser?.institute,
+          instituteId: currentUser?._id,
+          role: 'teacher',
+        },
       }
       const response = await ApiWithToken(apiOPtions)
       if (response?.statusCode === 201) {
@@ -62,7 +57,7 @@ export default function Teachers() {
 
       if (response?.statusCode === 200) {
         console.log(response)
-        setAllTeachers(response?.student)
+        // setAllTeachers(response?.student)
       }
     } catch (error) {
       setAllTeachers([])
@@ -100,7 +95,7 @@ export default function Teachers() {
         type="teacher"
         open={addTeacher}
         setOpen={setAddTeacher}
-        onSubmit={(classData) => addNewTeacher(classData)}
+        onSubmit={(data) => addNewTeacher(data)}
       />
       <Filter
         showBack={false}
@@ -120,10 +115,10 @@ export default function Teachers() {
         <CommonTable
           head={header}
           rows={allTeachers}
-          type="students"
+          type="teachers"
           onDelete={handleDeteleStudent}
         />
-        {allTeachers.length <= 0 && <NoData />}
+        {allTeachers?.length <= 0 && <NoData />}
       </div>
     </div>
   )

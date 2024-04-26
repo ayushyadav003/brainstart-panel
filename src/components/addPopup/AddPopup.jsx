@@ -276,7 +276,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
             <div className="subSection">
               <TextField
                 placeholder="Full Name"
-                {...register('fullName')}
+                {...register('ownerName')}
                 required
                 className="field"
                 fullWidth
@@ -286,6 +286,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                 placeholder="Phone"
                 {...register('phone')}
                 className="field"
+                required
                 fullWidth
               />
             </div>
