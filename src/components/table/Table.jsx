@@ -15,9 +15,8 @@ import "./table.scss";
 import { Block, Delete, Edit } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
-export default function CommonTable({ head, rows, type, onEdit, onDelete  }) {
-
-  console.log(rows)
+export default function CommonTable({ head, rows, type, onEdit, onDelete }) {
+  console.log(rows);
 
   return (
     <TableContainer component={Paper} className="tableContainer">
@@ -36,30 +35,29 @@ export default function CommonTable({ head, rows, type, onEdit, onDelete  }) {
         <TableBody>
           {rows.length > 0 &&
             rows.map((row, i) => (
-              <TableRow
-                key={i}
-              >
+              <TableRow key={i}>
                 {type === "students" && (
                   <>
                     <TableCell component="th" scope="row">
-                      {i+1}
+                      {i + 1}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {row?.fullName}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.email || '--'}
+                      {row?.email || "--"}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.phone || '--'}
+                      {row?.phone || "--"}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {row?.classes?.title}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      {row?.batches.length>0 &&
-                      row?.batches?.map((batch,i) => <span key={i}>{batch?.title}</span>)                      
-                      }
+                      {row?.batches.length > 0 &&
+                        row?.batches?.map((batch, i) => (
+                          <span key={i}>{batch?.title}</span>
+                        ))}
                     </TableCell>
                     <TableCell
                       style={{
@@ -72,7 +70,52 @@ export default function CommonTable({ head, rows, type, onEdit, onDelete  }) {
                         <Edit fontSize="small" onClick={onEdit} />
                       </span>
                       <span className="icon">
-                        <Delete fontSize="small" onClick={()=>onDelete(row)} />
+                        <Delete
+                          fontSize="small"
+                          onClick={() => onDelete(row)}
+                        />
+                      </span>
+                    </TableCell>
+                  </>
+                )}
+                {type === "teachers" && (
+                  <>
+                    <TableCell component="th" scope="row">
+                      {i + 1}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row?.fullName}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row?.email || "--"}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row?.phone || "--"}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row?.classes?.title}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {row?.batches.length > 0 &&
+                        row?.batches?.map((batch, i) => (
+                          <span key={i}>{batch?.title}</span>
+                        ))}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <span className="icon">
+                        <Edit fontSize="small" onClick={onEdit} />
+                      </span>
+                      <span className="icon">
+                        <Delete
+                          fontSize="small"
+                          onClick={() => onDelete(row)}
+                        />
                       </span>
                     </TableCell>
                   </>
@@ -80,7 +123,7 @@ export default function CommonTable({ head, rows, type, onEdit, onDelete  }) {
                 {type === "attendance" && (
                   <>
                     <TableCell component="th" scope="row">
-                      {i+1}
+                      {i + 1}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {row?.fullName}
@@ -89,33 +132,46 @@ export default function CommonTable({ head, rows, type, onEdit, onDelete  }) {
                       {row?.classes?.title}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                    {row?.batches.length>0 &&
-                      row?.batches?.map((batch,i) => <span key={i}>{batch?.title}</span>)                      
-                    }
+                      {row?.batches.length > 0 &&
+                        row?.batches?.map((batch, i) => (
+                          <span key={i}>{batch?.title}</span>
+                        ))}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                    {row?.attendance?.length>0 &&
-                          row?.attendance?.slice(0, -1).map(attendance => {
-                            const status = attendance?.batch[0]?.status;
-                        return(
-                            <span key={attendance._id}  className="attendanceStatus"
-                             style={{backgroundColor:status === 'ab'?'#ec5d77': status === 'p'?'#79B791':'gray'}}>
+                      {row?.attendance?.length > 0 &&
+                        row?.attendance?.slice(0, -1).map((attendance) => {
+                          const status = attendance?.batch[0]?.status;
+                          return (
+                            <span
+                              key={attendance._id}
+                              className="attendanceStatus"
+                              style={{
+                                backgroundColor:
+                                  status === "ab"
+                                    ? "#ec5d77"
+                                    : status === "p"
+                                    ? "#79B791"
+                                    : "gray",
+                              }}
+                            >
                               {status}
-                              </span>
-                          )
-                        })
-                      }
+                            </span>
+                          );
+                        })}
                     </TableCell>
-                  
+
                     <TableCell>
                       <FormControl>
                         <RadioGroup
                           row
                           aria-labelledby="demo-row-radio-buttons-group-label"
                           name="row-radio-buttons-group"
-                          style={{display: 'flex', alignItems: 'center'}}
-                          onChange={(e) =>  onEdit(e.target.value, row?._id )}
-                          defaultValue={row?.attendance[row?.attendance.length-1]?.batch[0]?.status}
+                          style={{ display: "flex", alignItems: "center" }}
+                          onChange={(e) => onEdit(e.target.value, row?._id)}
+                          defaultValue={
+                            row?.attendance[row?.attendance.length - 1]
+                              ?.batch[0]?.status
+                          }
                         >
                           <FormControlLabel
                             value="p"
@@ -184,8 +240,16 @@ export default function CommonTable({ head, rows, type, onEdit, onDelete  }) {
                       {row?.createdAt}
                     </TableCell>
                     <TableCell component="th" scope="row">
-                      <span style={{background:row?.status === 'Resolved'? '#809a7a':'#ec5d77', color:'#fff', borderRadius:'15px', padding:'5px 10px'}}>
-                      {row?.status}
+                      <span
+                        style={{
+                          background:
+                            row?.status === "Resolved" ? "#809a7a" : "#ec5d77",
+                          color: "#fff",
+                          borderRadius: "15px",
+                          padding: "5px 10px",
+                        }}
+                      >
+                        {row?.status}
                       </span>
                     </TableCell>
                     <TableCell
@@ -196,14 +260,14 @@ export default function CommonTable({ head, rows, type, onEdit, onDelete  }) {
                       }}
                     >
                       <span className="icon">
-                      <Tooltip title="Edit Ticket">
-                        <Edit fontSize="small" onClick={onEdit} />
-                      </Tooltip>
+                        <Tooltip title="Edit Ticket">
+                          <Edit fontSize="small" onClick={onEdit} />
+                        </Tooltip>
                       </span>
                       <span className="icon">
-                      <Tooltip title="Close Ticket">
-                        <Block fontSize="small" onClick={onDelete} />
-                      </Tooltip>
+                        <Tooltip title="Close Ticket">
+                          <Block fontSize="small" onClick={onDelete} />
+                        </Tooltip>
                       </span>
                     </TableCell>
                   </>
