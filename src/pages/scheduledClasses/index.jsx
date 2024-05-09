@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux'
 export default function ScheduledClass() {
   const [addMeeting, setAddMeeting] = useState(false)
   const { currentUser } = useSelector((state) => state.user)
-  const [filter, setFilter]  = useState({class:null, batch:null, search:''})
+  const [filter, setFilter] = useState({ class: null, batch: null, search: '' })
 
   const addNewClass = async (classData) => {
     console.log(classData)
@@ -46,7 +46,6 @@ export default function ScheduledClass() {
 
       if (response?.statusCode === 200) {
         console.log(response)
-        setAllClasses(response?.classes)
       }
     } catch (error) {
       toast.warning(error?.response?.data?.message)
@@ -60,11 +59,15 @@ export default function ScheduledClass() {
   }, [currentUser])
   return (
     <div className="scheduleContainer">
-      <Filter type="schedule" heading="Classes Scheduled"         showBack={false}
+      <Filter
+        type="schedule"
+        heading="Classes Scheduled"
+        showBack={false}
         showClass={true}
         showBatch={true}
         filter={filter}
-        setFilter={setFilter} />
+        setFilter={setFilter}
+      />
       <div className="Scheduletable">
         <div className="card addCard" onClick={() => setAddMeeting(true)}>
           <Add fontSize="large" />
@@ -87,7 +90,7 @@ export default function ScheduledClass() {
         ))}
       </div>
       <AddPopup
-        type="meetin"
+        type="meeting"
         open={addMeeting}
         setOpen={setAddMeeting}
         onSubmit={(meetingData) => addNewClass(meetingData)}

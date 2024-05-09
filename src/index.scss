@@ -12,10 +12,14 @@ body {
   button {
     text-transform: capitalize !important;
   }
-  .noData{
+  .noData {
     position: absolute;
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+
+.css-z3c6am-MuiFormControl-root-MuiTextField-root {
+  width: 100%;
 }

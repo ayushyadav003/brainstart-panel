@@ -18,6 +18,10 @@ import { useEffect, useState } from 'react'
 import { apiConfig } from '../../services/ApiConfig'
 import { useSelector } from 'react-redux'
 import { ApiWithToken } from '../../services/ApiWithToken'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import moment from 'moment/moment'
 
 export default function AddPopup({ type, open, setOpen, onSubmit }) {
   const { register, handleSubmit, reset, setValue } = useForm()
@@ -70,6 +74,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
       }
     } catch (error) {
       // toast.warning(error?.response?.data?.message)
+      console.log(error)
     }
   }
 
@@ -134,30 +139,6 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                 ),
               }}
             />
-            {/* <div className="subSection">
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['TimePicker']}>
-                  <TimePicker label="From time" />
-                </DemoContainer>
-              </LocalizationProvider>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['TimePicker']}>
-                  <TimePicker label="To time" />
-                </DemoContainer>
-              </LocalizationProvider>
-            </div> */}
-            {/* <Autocomplete
-              multiple
-              id="tags-outlined"
-              options={[]}
-              fullWidth
-              getOptionLabel={(option) => option.title}
-              filterSelectedOptions
-              renderInput={(params) => (
-                <TextField {...params} placeholder="Add students" />
-              )}
-            /> */}
-
             <Button
               variant="contained"
               className="submitBtn"
@@ -191,7 +172,6 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
             </Button>
           </div>
         )}
-
         {type === 'students' && (
           <div className="popupBox">
             <h2>Add New Student</h2>
@@ -269,7 +249,6 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
             </Button>
           </div>
         )}
-
         {type === 'teacher' && (
           <div className="popupBox">
             <h2>Add New Teacher</h2>
@@ -299,20 +278,62 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                 fullWidth
               />
             </div>
-            {/* <div className="subSection">
-              <Autocomplete
-                multiple
-                id="tags-outlined2"
-                options={classes}
+            <Button variant="contained" className="submitBtn" type="submit">
+              Add
+            </Button>
+          </div>
+        )}
+        {type === 'meeting' && (
+          <div className="popupBox">
+            <h2>Create Meeting</h2>
+            <div className="subSection">
+              <TextField
+                placeholder="Title"
+                {...register('title')}
+                required
+                className="field"
                 fullWidth
+              />
+            </div>
+            <div className="subSection">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  label="From"
+                  {...register('from')}
+                  onChange={(value) => {
+                    setValue(
+                      'from',
+                      moment(value).format('YYYY-MM-DD HH:mm:ss'),
+                    )
+                    console.log(moment(value).format('YYYY-MM-DD HH:mm:ss'))
+                  }}
+                />
+              </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  label="To"
+                  {...register('to')}
+                  onChange={(value) => {
+                    setValue('to', moment(value).format('YYYY-MM-DD HH:mm:ss'))
+                    console.log(moment(value).format('YYYY-MM-DD HH:mm:ss'))
+                  }}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="subSection">
+              <Autocomplete
+                id="tags-outlined"
+                options={classes}
+                onOpen={getAllClasses}
+                fullWidth
+                onChange={(e, value) => {
+                  setSelectedClass(value)
+                  setValue('classes', { id: value?._id, title: value?.title })
+                }}
                 getOptionLabel={(option) => option.title}
                 filterSelectedOptions
-                onOpen={getAllClasses}
-                onChange={(e, value) => {
-                  setValue('classes', value)
-                }}
                 renderInput={(params) => (
-                  <TextField {...params} placeholder="Select Classes" />
+                  <TextField {...params} placeholder="Select Class" />
                 )}
               />
               <Autocomplete
@@ -329,9 +350,18 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                   <TextField {...params} placeholder="Select Batches" />
                 )}
               />
-            </div> */}
+            </div>
+            <div className="subSection">
+              <TextField
+                placeholder="Description"
+                {...register('description')}
+                required
+                className="field"
+                fullWidth
+              />
+            </div>
             <Button variant="contained" className="submitBtn" type="submit">
-              Add
+              Create
             </Button>
           </div>
         )}
