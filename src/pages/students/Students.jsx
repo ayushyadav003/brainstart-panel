@@ -21,7 +21,7 @@ export default function Student() {
   const addNewStudent = async (classData) => {
     console.log(classData)
     const obj = classData
-    obj['batches'] = classData?.batches.map((data) => {
+    obj['batches'] = classData?.batches?.map((data) => {
       return { id: data?._id, title: data?.title }
     })
     obj['classes'] = {

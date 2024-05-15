@@ -24,38 +24,9 @@ import { ApiWithToken } from "../../services/ApiWithToken";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import moment from "moment/moment";
 import { TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 
-const repeatType = [
-  {
-    0: "Today",
-  },
-  {
-    1: "Tomorrow",
-  },
-  {
-    2: "5 days",
-    desc: "Monday - Friday",
-  },
-  {
-    3: "MWF",
-    desc: "Monday, Tuesday, Wednesday",
-  },
-  {
-    4: "TTS",
-    desc: "Tuesday, Thursday, Saturday",
-  },
-  {
-    5: "Weekends",
-    desc: "Saturday, Sunday",
-  },
-  {
-    6: "Daily",
-    desc: "Monday - Sunday",
-  },
-];
 export default function AddPopup({ type, open, setOpen, onSubmit }) {
   const { register, handleSubmit, reset, setValue } = useForm();
   const [loading, setLoading] = useState(false);
@@ -98,7 +69,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
         url: apiConfig.batch,
         params: {
           institute: currentUser?._id,
-          classIds: selectedClass?._id,
+          classId: selectedClass?._id,
         },
       };
       const response = await ApiWithToken(apiOPtions);
@@ -382,6 +353,23 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
                   <TextField {...params} placeholder="Select Batches" />
                 )}
               />
+            </div>
+
+            <div className="subSection">
+            <FormControlLabel
+          control={<Checkbox value={recursiveMeetings} onChange={(e)=> setRecursiveMeetings(e.target.checked)} />}
+          label="Recursive"
+          labelPlacement="start"
+        />
+        {
+          <div>
+
+            <span className="box">Today</span>
+            or
+            <span className="box">Tomorrow</span>
+            or
+          </div>
+        }
             </div>
             <div className="subSection">
               <TextField
