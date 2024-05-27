@@ -34,7 +34,6 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
   const [classes, setClasses] = useState([])
   const [selectedClass, setSelectedClass] = useState(null)
   const [batches, setBatches] = useState([])
-  const [recursiveMeetings, setRecursiveMeetings] = useState(false)
 
   const handleClose = () => {
     setOpen(false)
@@ -365,10 +364,13 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
             </div>
             <div className="subSection">
               <FormControlLabel
-                control={<Switch defaultChecked />}
+                control={<Switch checked={false} />}
                 label="Repeat"
                 labelPlacement="start"
               />
+              {
+
+              }
             </div>
             <Button variant="contained" className="submitBtn" type="submit">
               Create

@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { apiConfig } from '../../services/ApiConfig'
 import { ApiWithToken } from '../../services/ApiWithToken'
 import { useSelector } from 'react-redux'
+import AddMeetingPopup from '../../components/addPopup/AddMeetingPopup'
 
 export default function ScheduledClass() {
   const [addMeeting, setAddMeeting] = useState(false)
@@ -89,8 +90,7 @@ export default function ScheduledClass() {
           </div>
         ))}
       </div>
-      <AddPopup
-        type="meeting"
+      <AddMeetingPopup
         open={addMeeting}
         setOpen={setAddMeeting}
         onSubmit={(meetingData) => addNewClass(meetingData)}

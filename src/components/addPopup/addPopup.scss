@@ -18,9 +18,21 @@
 
   .subSection {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     width: 100%;
     gap: 1rem;
+    .dayWrapper{
+        font-size: 13px;
+        border: 1px solid #dcdcdc;
+        padding: 5px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    .repeatWrapper{
+      // margin-right: auto;
+      display: flex;
+      align-items: center;
+    }
   }
 }
 .submitBtn {
