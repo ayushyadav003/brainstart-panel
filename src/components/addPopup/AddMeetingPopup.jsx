@@ -1,145 +1,148 @@
 /* eslint-disable react/prop-types */
-import Dialog from '@mui/material/Dialog'
-import './addPopup.scss'
-import { Formik, useFormik } from 'formik'
-import * as Yup from 'yup'
+import Dialog from "@mui/material/Dialog";
+import "./addPopup.scss";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import {
   Autocomplete,
   Button,
-  FormControlLabel,
   FormHelperText,
   Switch,
   TextField,
-} from '@mui/material'
-import { Close } from '@mui/icons-material'
-import { useForm } from 'react-hook-form'
-import { useEffect, useState } from 'react'
-import { apiConfig } from '../../services/ApiConfig'
-import { useSelector } from 'react-redux'
-import { ApiWithToken } from '../../services/ApiWithToken'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers'
-import dayjs from 'dayjs'
-import { toast } from 'react-toastify'
+} from "@mui/material";
+import { Close } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { apiConfig } from "../../services/ApiConfig";
+import { useSelector } from "react-redux";
+import { ApiWithToken } from "../../services/ApiWithToken";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { TimePicker } from "@mui/x-date-pickers";
+import { toast } from "react-toastify";
+import moment from "moment";
 
-const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-export default function AddMeetingPopup({ open, setOpen, onSubmit }) {
-  const { register, handleSubmit, reset, setValue } = useForm()
-  const [loading, setLoading] = useState(false)
-  const { currentUser } = useSelector((state) => state.user)
-  const [classes, setClasses] = useState([])
-  const [selectedClass, setSelectedClass] = useState(null)
-  const [batches, setBatches] = useState([])
-  const [selectedDays, setSelectedDays] = useState({})
+const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const hourData = ["45 min", "45 min", "1 hr", "2 hr"];
+
+export default function AddMeetingPopup({ open, setOpen }) {
+  const [loading, setLoading] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+  const [classes, setClasses] = useState([]);
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [batches, setBatches] = useState([]);
+  const [selectedDays, setSelectedDays] = useState({});
 
   const validateSchema = Yup.object().shape({
-    title: Yup.string().required('This field is required'),
+    title: Yup.string().required("This field is required"),
     description: Yup.string().notRequired(),
-    startTime: Yup.string().required('This field is required'),
-    endTime: Yup.string().required('This field is required'),
-    days: Yup.string().required('This field is required'),
-  })
+    startTime: Yup.string().required("This field is required"),
+    endTime: Yup.string().required("This field is required"),
+    days: Yup.string().required("This field is required"),
+    class: Yup.object().required("This field is required"),
+    batch: Yup.object().required("This field is required"),
+  });
 
   const formik = useFormik({
     initialValues: {
-      title: '',
-      description: '',
+      title: "",
+      description: "",
       repeat: false,
       startTime: null,
-      endTime: null,
-      days: null,
+      class: null,
+      batch: null,
+      duration: null,
+      days: moment().format("YYYY-MM-DD"),
     },
     validationSchema: validateSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        setLoading(true)
+        setLoading(true);
         const apiOPtions = {
-          method: 'GET',
+          method: "GET",
           url: apiConfig.class,
           body: { ...values, institute: currentUser?._id },
-        }
-        const response = await ApiWithToken(apiOPtions)
+        };
+        const response = await ApiWithToken(apiOPtions);
 
-        console.log(response)
+        console.log(response);
         if (response?.statusCode === 200) {
-          toast.success(response?.data?.message)
+          toast.success(response?.data?.message);
         } else {
-          toast.warning(response?.data?.message)
+          toast.warning(response?.data?.message);
         }
       } catch (error) {
-        toast.warning(error?.response?.data?.message)
+        toast.warning(error?.response?.data?.message);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     },
-  })
+  });
 
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const getAllClasses = async () => {
     try {
       const apiOPtions = {
-        method: 'GET',
+        method: "GET",
         url: apiConfig.class,
         params: { institute: currentUser?._id },
-      }
-      const response = await ApiWithToken(apiOPtions)
+      };
+      const response = await ApiWithToken(apiOPtions);
 
       if (response?.statusCode === 200) {
-        setClasses(response?.classes)
+        setClasses(response?.classes);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   const getAllBatches = async () => {
     try {
       const apiOPtions = {
-        method: 'GET',
+        method: "GET",
         url: apiConfig.batch,
         params: {
           institute: currentUser?._id,
           classId: selectedClass?._id,
         },
-      }
-      const response = await ApiWithToken(apiOPtions)
+      };
+      const response = await ApiWithToken(apiOPtions);
 
       if (response?.statusCode === 200) {
-        setBatches(response?.batches)
+        setBatches(response?.batches);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  console.log(selectedDays)
+  console.log(selectedDays);
 
   useEffect(() => {
     if (selectedClass) {
-      getAllBatches()
+      getAllBatches();
     }
-  }, [selectedClass])
+  }, [selectedClass]);
 
   const updateDays = (day, i) => {
-    let daysObj = { ...selectedDays }
+    let daysObj = { ...selectedDays };
     if (selectedDays[i]) {
-      delete daysObj[i]
-      setSelectedDays({ ...daysObj })
+      delete daysObj[i];
+      setSelectedDays({ ...daysObj });
     } else {
-      setSelectedDays({ ...selectedDays, [i]: day })
+      setSelectedDays({ ...selectedDays, [i]: day });
     }
-  }
+  };
   return (
     <Dialog onClose={handleClose} open={open} maxWidth={false}>
       <Close
         style={{
-          position: 'absolute',
-          right: '25px',
-          top: '15px',
-          cursor: 'pointer',
+          position: "absolute",
+          right: "25px",
+          top: "15px",
+          cursor: "pointer",
         }}
         onClick={handleClose}
       />
@@ -165,38 +168,47 @@ export default function AddMeetingPopup({ open, setOpen, onSubmit }) {
                 <TimePicker
                   label="Start time"
                   name="startTime"
-                  error={formik.touched.startTime && formik.errors.startTime}
+                  // error={formik.touched.startTime && formik.errors.startTime}
                   helperText={
                     formik.touched.startTime && formik.errors.startTime
                   }
+                  disablePast
+                  ampm={false}
                   value={formik.values.startTime}
                   onBlur={formik.handleBlur}
                   onChange={(val) => {
-                    formik.setFieldValue('from', dayjs(val).format('HH:mm'))
+                    formik.setFieldValue("from", dayjs(val).format("HH:mm"));
                   }}
                 />
               </LocalizationProvider>
-              <FormHelperText error sx={{ marginLeft: '14px' }}>
+              <FormHelperText error sx={{ marginLeft: "14px" }}>
                 {formik.touched.startTime && formik.errors.startTime}
               </FormHelperText>
             </div>
             <div className="inner">
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <TimePicker
-                  label="End time"
-                  name="endTime"
-                  error={formik.touched.endTime && formik.errors.endTime}
-                  helperText={formik.touched.endTime && formik.errors.endTime}
-                  value={formik.values.endTime}
-                  onBlur={formik.handleBlur}
-                  onChange={(val) => {
-                    formik.setFieldValue('endTime', dayjs(val).format('HH:mm'))
-                  }}
-                />
-              </LocalizationProvider>
-              <FormHelperText error sx={{ marginLeft: '14px' }}>
-                {formik.touched.startTime && formik.errors.startTime}
-              </FormHelperText>
+              <Autocomplete
+                id="tags-outlined3"
+                options={hourData}
+                fullWidth
+                name="duration"
+                error={formik.touched.duration && formik.errors.duration}
+                value={formik.values.duration || ""}
+                onBlur={formik.handleBlur}
+                onChange={(e, value) => {
+                  formik.setFieldValue("duration", value);
+                }}
+                getOptionLabel={(option, i) => option || ""}
+                filterSelectedOptions
+                label="Duration"
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="Select Duration" />
+                )}
+              />
+              {formik.touched.class && (
+                <FormHelperText error sx={{ marginLeft: "14px" }}>
+                  {formik.errors.class}
+                </FormHelperText>
+              )}
             </div>
           </div>
           <div className="subSection">
@@ -205,53 +217,53 @@ export default function AddMeetingPopup({ open, setOpen, onSubmit }) {
                 id="tags-outlined"
                 options={classes}
                 onOpen={getAllClasses}
+                label="Class"
                 fullWidth
-                name="classes"
-                error={formik.touched.classes && formik.errors.classes}
-                helperText={formik.touched.classes && formik.errors.classes}
-                value={formik.values.classes}
+                name="class"
+                error={formik.touched.class && formik.errors.class}
+                value={formik.values.class || ""}
                 onBlur={formik.handleBlur}
                 onChange={(e, value) => {
-                  setSelectedClass(value)
-                  formik.setFieldValue('classes', {
+                  setSelectedClass(value);
+                  formik.setFieldValue("class", {
                     id: value?._id,
                     title: value?.title,
-                  })
+                  });
                 }}
-                getOptionLabel={(option) => option.title}
+                getOptionLabel={(option) => option?.title || ""}
                 filterSelectedOptions
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Select Class" />
                 )}
               />
-              <FormHelperText error sx={{ marginLeft: '14px' }}>
-                {formik.touched.classes && formik.errors.classs}
+              <FormHelperText error sx={{ marginLeft: "14px" }}>
+                {formik.touched.startTime && formik.errors.startTime}
               </FormHelperText>
             </div>
 
             <div className="inner">
               <Autocomplete
-                multiple
                 id="tags-outlined2"
                 options={batches}
                 fullWidth
-                error={formik.touched.batches && formik.errors.batches}
-                helperText={formik.touched.batches && formik.errors.batches}
-                value={formik.values.batches}
+                error={formik.touched.batch && formik.errors.batch}
+                value={formik.values.batch}
                 onBlur={formik.handleBlur}
-                name="batches"
-                getOptionLabel={(option) => option.title}
+                name="batch"
+                getOptionLabel={(option) => option?.title || ""}
                 filterSelectedOptions
                 onChange={(e, value) => {
-                  formik.setFieldValue('batches', value)
+                  formik.setFieldValue("batches", value);
                 }}
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Select Batches" />
                 )}
               />
-              <FormHelperText error sx={{ marginLeft: '14px' }}>
-                {formik.touched.batches && formik.errors.batches}
-              </FormHelperText>
+              {formik.touched.batch && (
+                <FormHelperText error sx={{ marginLeft: "14px" }}>
+                  {formik.errors.batch}
+                </FormHelperText>
+              )}
             </div>
           </div>
           <TextField
@@ -265,7 +277,7 @@ export default function AddMeetingPopup({ open, setOpen, onSubmit }) {
             onBlur={formik.handleBlur}
             fullWidth
           />
-          <div className="subSection" style={{ alignItems: 'center' }}>
+          <div className="subSection" style={{ alignItems: "center" }}>
             <span className="repeatWrapper">
               Repeat
               <Switch
@@ -274,7 +286,7 @@ export default function AddMeetingPopup({ open, setOpen, onSubmit }) {
                 helperText={formik.touched.repeat && formik.errors.repeat}
                 checked={formik.values.repeat}
                 onChange={(e) => {
-                  formik.setFieldValue('repeat', e.target.checked)
+                  formik.setFieldValue("repeat", e.target.checked);
                 }}
                 onBlur={formik.handleBlur}
               />
@@ -286,7 +298,7 @@ export default function AddMeetingPopup({ open, setOpen, onSubmit }) {
                   key={i}
                   onClick={() => updateDays(day, i)}
                   style={{
-                    background: selectedDays[i] ? 'rgb(132 147 214 / 51%)' : '',
+                    background: selectedDays[i] ? "rgb(132 147 214 / 51%)" : "",
                   }}
                 >
                   {day}
@@ -296,17 +308,14 @@ export default function AddMeetingPopup({ open, setOpen, onSubmit }) {
               <TextField
                 id="date"
                 label="Select Date"
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
                 fullWidth
                 type="date"
-                // defaultValue="2017-05-24"
+                value={formik.values.days}
                 sx={{ width: 220 }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
                 onChange={(e) => {
-                  console.log(e.target.value)
-                  formik.setFieldValue('day', e.target.checked)
+                  console.log(e.target.value);
+                  formik.setFieldValue("days", e.target.value);
                 }}
                 onBlur={formik.handleBlur}
               />
@@ -318,5 +327,5 @@ export default function AddMeetingPopup({ open, setOpen, onSubmit }) {
         </div>
       </form>
     </Dialog>
-  )
+  );
 }
