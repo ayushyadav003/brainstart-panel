@@ -16,26 +16,6 @@ export default function ScheduledClass() {
   const { currentUser } = useSelector((state) => state.user)
   const [filter, setFilter] = useState({ class: null, batch: null, search: '' })
 
-  const addNewClass = async (classData) => {
-    console.log(classData)
-
-    try {
-      const apiOPtions = {
-        method: 'POST',
-        url: apiConfig?.class,
-        data: { title: classData.title, institute: currentUser?._id },
-      }
-      const response = await ApiWithToken(apiOPtions)
-      if (response?.statusCode === 201) {
-        toast.success(response?.message)
-        setAddMeeting(false)
-        getAllClasses()
-      }
-    } catch (error) {
-      toast.warning(error?.response?.data?.message)
-    }
-  }
-
   const getAllMeetings = async () => {
     try {
       const apiOPtions = {
@@ -90,11 +70,7 @@ export default function ScheduledClass() {
           </div>
         ))}
       </div>
-      <AddMeetingPopup
-        open={addMeeting}
-        setOpen={setAddMeeting}
-        onSubmit={(meetingData) => addNewClass(meetingData)}
-      />
+      <AddMeetingPopup open={addMeeting} setOpen={setAddMeeting} />
     </div>
   )
 }
