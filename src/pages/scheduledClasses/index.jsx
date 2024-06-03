@@ -4,7 +4,6 @@ import Filter from '../../components/filter/Filter'
 import './scheduledClasses.scss'
 import { Add } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
-import AddPopup from '../../components/addPopup/AddPopup'
 import { toast } from 'react-toastify'
 import { apiConfig } from '../../services/ApiConfig'
 import { ApiWithToken } from '../../services/ApiWithToken'
@@ -20,8 +19,8 @@ export default function ScheduledClass() {
     try {
       const apiOPtions = {
         method: 'GET',
-        url: apiConfig.class,
-        params: { institute: currentUser?._id },
+        url: apiConfig.meetings,
+        params: { instituteId: currentUser?._id },
       }
       const response = await ApiWithToken(apiOPtions)
 
