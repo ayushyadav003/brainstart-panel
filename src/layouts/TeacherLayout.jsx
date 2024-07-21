@@ -5,7 +5,7 @@ import "./layout.scss";
 export default function TeacherLayout({ children }) {
   return (
     <div className="dashboardLayout">
-      <Sidebar />
+      <Sidebar/>
       <div className="dashboardBody">{children}</div>
     </div>
   );
