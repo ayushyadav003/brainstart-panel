@@ -4,15 +4,11 @@ import { AddBox, Paragliding, PictureAsPdf, TextFieldsRounded } from '@mui/icons
 import { useNavigate } from 'react-router-dom'
 import Filter from '../../../components/filter/Filter'
 
-import { Autocomplete, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, IconButton, Stack, TextField } from '@mui/material'
+import { Autocomplete, Button, Box, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, IconButton, Stack, TextField } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
 export default function Notes() {
   const navigate = useNavigate()
-  const notesAddOption = [
-    {label : "Upload from PDF"},
-    {label : "Write Notes"},
-  ]
   const [filter, setFilter] = useState({class:null, batch:null, search:''})
   const [notes, setNotes] = useState([
     { noteID: '1', name: 'Chemistry', class: '', batch: '' },
@@ -32,26 +28,31 @@ export default function Notes() {
         </div>
 
         <Dialog open={addNotesPrompt} fullWidth maxWidth="sm" spacing={10} sx={{border : "3px solid green"}}>
-          <DialogTitle>Please confirm<IconButton sx={{float : "right"}} onClick={() => setAddNotesPrompt(false)}><CloseIcon color='error'></CloseIcon></IconButton></DialogTitle>
+          <DialogTitle ><IconButton sx={{float : "right"}} onClick={() => setAddNotesPrompt(false)}><CloseIcon color=''></CloseIcon></IconButton></DialogTitle>
           <DialogContent>
-            <DialogContentText>How do you want to add the notes?</DialogContentText>
-            <Autocomplete
-              options={notesAddOption}
-              renderInput={(params) => (
-                <TextField {...params} label="Select One"></TextField>
-              )}
-            >
-            </Autocomplete>
+            {/* <DialogContentText>How do you want to add the notes?</DialogContentText> */}
+            <div className="addNotes">
+              <h2>How do you want to add the notes?</h2>
+              <div className="uploadWrapper">
+                <div className="upload">Upload from pdf</div>
+              </div>
+
+              <div className="writeNotesWrapper">
+                <div className="writeNotes">Write Notes</div>
+              </div>
+            </div>
+
+            <Box sx={{ display:"flex",
+              justifyContent:"end",
+              /* alignItems:"center" */}}>
+              <Button  variant='contained' sx={{textAlign : "center"}}>Confirm</Button>
+            </Box>
           </DialogContent>
       </Dialog>
 
         {notes.map((note, i) => {
           return (
             <div className="note" key={i}>
-              {/* <div>
-                <RemoveRedEye fontSize="small" />
-                <Create fontSize="snall" />
-              </div> */}
               <span>
                 <PictureAsPdf />
               </span>
