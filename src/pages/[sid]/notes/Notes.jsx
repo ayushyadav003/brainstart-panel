@@ -6,6 +6,7 @@ import Filter from '../../../components/filter/Filter'
 
 import { Autocomplete, Button, Box, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, IconButton, Stack, TextField } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import AddPopup from '../../../components/addPopup/AddPopup'
 
 export default function Notes() {
   const navigate = useNavigate()
@@ -18,6 +19,10 @@ export default function Notes() {
   ])
 
   const [addNotesPrompt, setAddNotesPrompt] = useState(false)
+
+  const handleWriteNotes = () => {
+    navigate('')
+  }
   return (
     <div className="notesConatiner">
       <Filter heading={'Notes'} filter={filter} setFilter={setFilter} />
@@ -27,32 +32,11 @@ export default function Notes() {
           <AddBox/>
         </div>
 
-        <Dialog open={addNotesPrompt} fullWidth maxWidth="sm" spacing={10} sx={{border : "3px solid green"}}>
-          <DialogTitle ><IconButton sx={{float : "right"}} onClick={() => setAddNotesPrompt(false)}><CloseIcon color=''></CloseIcon></IconButton></DialogTitle>
-          <DialogContent>
-            {/* <DialogContentText>How do you want to add the notes?</DialogContentText> */}
-            <div className="addNotes">
-              <h2>How do you want to add the notes?</h2>
-              <div className="uploadWrapper">
-                <div className="upload">Upload from pdf</div>
-              </div>
-
-              <div className="writeNotesWrapper">
-                <div className="writeNotes">Write Notes</div>
-              </div>
-            </div>
-
-            <Box sx={{ display:"flex",
-              justifyContent:"end",
-              /* alignItems:"center" */}}>
-              <Button  variant='contained' sx={{textAlign : "center"}}>Confirm</Button>
-            </Box>
-          </DialogContent>
-      </Dialog>
+        <AddPopup type="addnote" open={addNotesPrompt} setOpen={setAddNotesPrompt}  />
 
         {notes.map((note, i) => {
           return (
-            <div className="note" key={i}>
+            <div className="note" key={i} >
               <span>
                 <PictureAsPdf />
               </span>

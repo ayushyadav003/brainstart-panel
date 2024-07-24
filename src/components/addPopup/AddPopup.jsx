@@ -377,7 +377,24 @@ export default function AddPopup({ type, open, setOpen, onSubmit }) {
             </Button>
           </div>
         )}
+
       </form>
+
+      {/* This is to add notes added by Udhav */}
+      {
+        type === 'addnote' && (
+          <div className="popupBox">
+            <h2>How do you want to add the notes?</h2>
+            <div className="uploadWrapper">
+              <div className="upload">Upload from pdf</div>
+            </div>
+
+            <div className="writeNotesWrapper">
+              <div className="writeNotes">Write Notes</div>
+            </div>
+          </div>
+        )
+      }
     </Dialog>
   )
 }

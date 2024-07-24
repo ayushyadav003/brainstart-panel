@@ -37,6 +37,21 @@
       align-items: center;
     }
   }
+
+  .uploadWrapper, .writeNotesWrapper{
+    height: 30px;
+    background-color: #947aff;
+    color: white;
+    border-radius: 9px;
+    width: 50%;
+    font-size: larger;
+    font-weight: 400;
+  }
+  .upload, .writeNotes{
+    width: fit-content;
+    margin: auto;
+    margin-top: 3px;
+  }
 }
 .submitBtn {
   width: fit-content;
