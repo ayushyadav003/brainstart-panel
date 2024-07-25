@@ -37,6 +37,30 @@
       align-items: center;
     }
   }
+
+  .uploadWrapper, .writeNotesWrapper{
+    height: 30px;
+    background-color: #947aff;
+    color: white;
+    border-radius: 9px;
+    width: 50%;
+    font-size: larger;
+    font-weight: 400;
+    transition: all;
+    transition-duration: 0.2s;
+    &:hover{
+      cursor: pointer;
+    }
+    &:active{
+      transform: scale(0.95, 0.95);
+      background-color: #9e88f3;
+    }
+  }
+  .upload, .writeNotes{
+    width: fit-content;
+    margin: auto;
+    margin-top: 3px;
+  }
 }
 .submitBtn {
   width: fit-content;
