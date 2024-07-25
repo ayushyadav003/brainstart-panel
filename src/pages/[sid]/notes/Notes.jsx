@@ -21,7 +21,7 @@ export default function Notes() {
   const [addNotesPrompt, setAddNotesPrompt] = useState(false)
 
   const handleWriteNotes = () => {
-    navigate('')
+    navigate('update-notes')
   }
   return (
     <div className="notesConatiner">
@@ -32,7 +32,7 @@ export default function Notes() {
           <AddBox/>
         </div>
 
-        <AddPopup type="addnote" open={addNotesPrompt} setOpen={setAddNotesPrompt}  />
+        <AddPopup type="addnote" open={addNotesPrompt} setOpen={setAddNotesPrompt}  handleWriteNotes={handleWriteNotes}/>
 
         {notes.map((note, i) => {
           return (
