@@ -19,9 +19,25 @@ export default function Notes() {
   ])
 
   const [addNotesPrompt, setAddNotesPrompt] = useState(false)
+  const [fileUpload, setFileUpload] = useState(null)
+  
 
   const handleWriteNotes = () => {
-    navigate('update-notes')
+    setTimeout(()=> {
+      navigate('update-notes')
+    }, 400)
+  }
+
+  const handleUploadNotes = () => {
+    console.log('inside upload notes');
+    let input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.click()
+    input.addEventListener('change', (event)=> {
+      setFileUpload(event.target.files[0])
+    })
+
+    input = null;
   }
   return (
     <div className="notesConatiner">
@@ -32,7 +48,7 @@ export default function Notes() {
           <AddBox/>
         </div>
 
-        <AddPopup type="addnote" open={addNotesPrompt} setOpen={setAddNotesPrompt}  handleWriteNotes={handleWriteNotes}/>
+        <AddPopup type="addnote" open={addNotesPrompt} setOpen={setAddNotesPrompt}  handleWriteNotes={handleWriteNotes} handleUploadNotes={handleUploadNotes}/>
 
         {notes.map((note, i) => {
           return (

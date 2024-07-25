@@ -27,7 +27,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { DatePicker, TimePicker } from '@mui/x-date-pickers'
 import dayjs from 'dayjs'
 
-export default function AddPopup({ type, open, setOpen, onSubmit, handleWriteNotes}) {
+export default function AddPopup({ type, open, setOpen, onSubmit, handleWriteNotes, handleUploadNotes}) {
   const { register, handleSubmit, reset, setValue } = useForm()
   const [loading, setLoading] = useState(false)
   const { currentUser } = useSelector((state) => state.user)
@@ -385,7 +385,7 @@ export default function AddPopup({ type, open, setOpen, onSubmit, handleWriteNot
         type === 'addnote' && (
           <div className="popupBox">
             <h2>How do you want to add the notes?</h2>
-            <div className="uploadWrapper">
+            <div className="uploadWrapper" onClick={() => handleUploadNotes()}>
               <div className="upload">Upload from pdf</div>
             </div>
 
