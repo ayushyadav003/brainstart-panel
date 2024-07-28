@@ -32,6 +32,8 @@ export default function Notes() {
     console.log('inside upload notes');
     let input = document.createElement('input')
     input.setAttribute('type', 'file')
+    input.setAttribute('accept', 'application/pdf')
+    
     input.click()
     input.addEventListener('change', (event)=> {
       setFileUpload(event.target.files[0])
