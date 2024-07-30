@@ -10,7 +10,7 @@ import {
   NotificationsActive,
 } from "@mui/icons-material/";
 import "./sidebar.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { setUserData } from "../../redux/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,6 +31,7 @@ const sidebarOptions = [
 function Sidebar() {
   const pathname = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -44,7 +45,7 @@ function Sidebar() {
 
   return (
     <>
-      <div className="sidebarContainer">
+      <div className="sidebarContainer" onClick={() => navigate('/profile')}>
         <div className="dp">
           <img src="/account.png" />
           <p>{currentUser?.fullName || currentUser?.ownerName}</p>

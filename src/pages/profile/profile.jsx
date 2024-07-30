@@ -1,7 +1,12 @@
+import { Box } from '@mui/material'
 import React from 'react'
 
-export default function profile() {
+const Profile = () => {
   return (
-    <div>profile</div>
+    <Box sx={{border : "3px solid red"}}>
+
+    </Box>
   )
 }
+
+export default Profile

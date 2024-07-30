@@ -13,6 +13,7 @@ import Support from '../pages/support/Support'
 import Teacher from '../pages/teachers/Teachers'
 import Attendace from '../pages/attendance/Attendance'
 import Teachers from '../pages/teachers/Teachers'
+import Profile from '../pages/profile/profile'
 
 export default function Router() {
   return (
@@ -121,6 +122,10 @@ export default function Router() {
               <Support />
             </TeacherLayout>
           }
+        />
+        <Route
+          path="/profile"
+          element={<Profile />}
         />
       </Routes>
     </BrowserRouter>
