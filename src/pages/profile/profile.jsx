@@ -1,10 +1,11 @@
+import React, {useState} from 'react'
 import { Box } from '@mui/material'
 import {Email, Phone} from '@mui/icons-material'
-import React from 'react'
 
 import './Profile.scss'
 
 const Profile = () => {
+  const [active, setActive] = useState({account : true, password : false, address : false, notifications : false})
   return (
     <div className="profile">
       <div className="dp">
@@ -17,11 +18,18 @@ const Profile = () => {
       </div>
 
       <div className="actions">
-        <p>Account settings</p>
-        <p>Manage password</p>
-        <p>Address</p>
-        <p>Notifications</p>
+        <p className={`${active.account ? "active" : ""}`} onClick={() => setActive({account : true, password : false, address : false, notifications : false})}>Account settings</p>
+        <p className={`${active.password ? "active" : ""}`} onClick={() => setActive({account : false, password : true, address : false, notifications : false})}>Manage password</p>
+        <p className={`${active.address ? "active" : ""}`} onClick={() => setActive({account : false, password : false, address : true, notifications : false})}>Address</p>
+        <p className={`${active.notifications ? "active" : ""}`} onClick={() => setActive({account : false, password : false, address : false, notifications : true})}>Notifications</p>
       </div>
+
+      {active.account && 
+        <div className="account-setting">
+          
+        </div>
+      
+      }
     </div>
   )
 }
