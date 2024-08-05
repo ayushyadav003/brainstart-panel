@@ -45,8 +45,8 @@ function Sidebar() {
 
   return (
     <>
-      <div className="sidebarContainer" onClick={() => navigate('/profile')}>
-        <div className="dp">
+      <div className="sidebarContainer" >
+        <div className="dp" onClick={() => navigate('/profile')}>
           <img src="/account.png" />
           <p>{currentUser?.fullName || currentUser?.ownerName}</p>
         </div>

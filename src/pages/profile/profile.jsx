@@ -1,37 +1,42 @@
-import React, {useState} from 'react'
-import { Box } from '@mui/material'
-import {Email, Phone} from '@mui/icons-material'
-
+import React from 'react'
 import './Profile.scss'
 
-const Profile = () => {
-  const [active, setActive] = useState({account : true, password : false, address : false, notifications : false})
+const profile = () => {
   return (
-    <div className="profile">
+    <div className='profile'>
       <div className="dp">
-        <img src="/account.png" />
-        <p>Udhav Negi</p>
-        <div className="contact">
-          <p className='email' style={{display : "flex", gap : "8px"}}><span><Email></Email></span>udhavnegi960@gmail.com</p>
-          <p className='phone' style={{display : "flex", gap : "3px"}}><span><Phone></Phone></span>+91-7456904822</p>
+          <img src="/account.png" />
+          <p>Udhav Negi</p>
+          <div className="contacts">
+            <p>udhavnegi960@gmail.com</p>
+            <p>+91 - 7456904822</p>
+          </div>
+      </div>
+
+      <div className="profileFields">
+        <div className="name greyed">
+          <label htmlFor="name">Name</label>
+          <input id="name" type="text" placeholder='Udhav Negi'/>
+        </div>
+
+        <div className="gender light">
+          <label htmlFor="gender">Gender</label>
+          <input id="gender" type="text" placeholder='Male'/>
+        </div>
+
+        <div className="email greyed">
+          <label htmlFor="email">Email</label>
+          <input id="email" type="text" placeholder='udhavnegi960@gmail.com'/>
+        </div>
+
+        <div className="email light">
+          <label htmlFor="email">Mobile</label>
+          <input id="email" type="text" placeholder='+91-7456904822'/>
         </div>
       </div>
 
-      <div className="actions">
-        <p className={`${active.account ? "active" : ""}`} onClick={() => setActive({account : true, password : false, address : false, notifications : false})}>Account settings</p>
-        <p className={`${active.password ? "active" : ""}`} onClick={() => setActive({account : false, password : true, address : false, notifications : false})}>Manage password</p>
-        <p className={`${active.address ? "active" : ""}`} onClick={() => setActive({account : false, password : false, address : true, notifications : false})}>Address</p>
-        <p className={`${active.notifications ? "active" : ""}`} onClick={() => setActive({account : false, password : false, address : false, notifications : true})}>Notifications</p>
-      </div>
-
-      {active.account && 
-        <div className="account-setting">
-          
-        </div>
-      
-      }
     </div>
   )
 }
 
-export default Profile
+export default profile

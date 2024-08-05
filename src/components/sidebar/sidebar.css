@@ -1,0 +1,80 @@
+.sidebarContainer {
+  padding: 2rem 0 0 0;
+  height: 100vh;
+  border-right: 1px solid #dcdcdc;
+  background-color: #fff;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 999;
+}
+.sidebarContainer .dp {
+  height: 60px;
+  width: 60px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+.sidebarContainer .dp img {
+  height: 60px;
+  width: 60px;
+}
+.sidebarContainer .dp p {
+  margin: 10px 0 0 0;
+  color: gray;
+}
+.sidebarContainer .sidebarOptions {
+  margin: 8vh 0 0 0;
+  overflow: auto;
+  overflow-x: hidden;
+}
+.sidebarContainer .sidebarOptions .options {
+  display: flex;
+  color: #000;
+  width: 100%;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.sidebarContainer .sidebarOptions .options p {
+  margin: 0;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.mobiletouchBar {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebarContainer {
+    display: none;
+  }
+  .mobiletouchBar {
+    background-color: #fff;
+    z-index: 9;
+    display: flex;
+    width: 100vw;
+    overflow: auto;
+    border: 1px solid #ddd;
+    position: fixed;
+    padding: 10px 0;
+    gap: 1rem;
+    bottom: 0;
+  }
+  .mobiletouchBar .options {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+    padding: 5px 8px;
+  }
+  .mobiletouchBar .options p {
+    margin: 0;
+  }
+}/*# sourceMappingURL=sidebar.css.map */

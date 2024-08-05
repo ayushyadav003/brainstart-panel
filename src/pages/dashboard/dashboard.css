@@ -1,0 +1,49 @@
+.dashboardContainer {
+  display: flex;
+  gap: 1rem;
+  padding: 20px;
+  color: #000;
+}
+.dashboardContainer .inner1 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.dashboardContainer .inner1 .detailsWrapper {
+  gap: 1.5rem;
+  display: flex;
+}
+.dashboardContainer .inner1 .chartWrapper {
+  background-color: #fff;
+  width: 50vw;
+  height: 500px;
+  display: flex;
+  align-items: end;
+}
+.dashboardContainer .cardsWrapper {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  border-radius: 10px;
+  color: #fff;
+  width: 200px;
+  padding: 20px 20px;
+}
+.dashboardContainer .cardsWrapper .mainTitle {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+}
+.dashboardContainer .cardsWrapper .innerInfo {
+  display: flex;
+  justify-content: space-between;
+}
+.dashboardContainer .cardsWrapper .innerInfo .title {
+  font-size: 1em;
+  font-weight: 500;
+}
+.dashboardContainer .cardsWrapper .innerInfo .titleInfo {
+  margin: 0 0 0 10px;
+}
+.dashboardContainer .cardsWrapper:hover {
+  transform: scale(1.1);
+}/*# sourceMappingURL=dashboard.css.map */

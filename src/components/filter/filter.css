@@ -1,0 +1,94 @@
+.filterContainer {
+  width: 85%;
+  display: flex;
+  height: 70px;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  justify-content: space-between;
+  background-color: #fff;
+  border-bottom: 1px solid #dcdcdc;
+}
+.filterContainer .heading {
+  display: flex;
+  padding: 15px 2rem;
+  align-items: center;
+  gap: 1.5rem;
+}
+.filterContainer .heading .searchBarIcon {
+  display: none;
+}
+.filterContainer .heading h1 {
+  margin: 0;
+  font-size: 1.6em;
+}
+.filterContainer .filter {
+  display: flex;
+  padding: 15px 2rem;
+  align-items: center;
+  gap: 1rem;
+}
+.filterContainer .filter .dropDown {
+  width: 140px;
+}
+
+@media screen and (max-width: 768px) {
+  .filterContainer {
+    background-color: #fff;
+    position: relative;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .filterContainer .heading {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    width: 100%;
+    gap: 1.5rem;
+  }
+  .filterContainer .heading h1 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+  .filterContainer .heading .searchBarIcon {
+    display: flex;
+    position: absolute;
+    right: 30px;
+  }
+  .filterContainer .filter {
+    position: fixed;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    top: -500px;
+    opacity: 0;
+    transition: all ease-in 100ms 100ms;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .filterContainer .filter .dropDown {
+    width: 90%;
+  }
+  .filterContainer .filter .search {
+    width: 90%;
+  }
+  .filterContainer .filterOpen {
+    position: fixed;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    top: 80px;
+    transition: all ease-in 100ms 100ms;
+    background-color: #fff;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .filterContainer .filterOpen .dropDown {
+    width: 90%;
+  }
+  .filterContainer .filterOpen .search {
+    width: 90%;
+  }
+}/*# sourceMappingURL=filter.css.map */

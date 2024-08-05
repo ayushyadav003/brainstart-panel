@@ -1,0 +1,92 @@
+.scheduleContainer .icons span {
+  margin: 10px 10px 10px auto;
+  color: #8dd126;
+  border: 2px solid #8dd126;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  cursor: pointer;
+  height: 40px;
+  background-color: #fff;
+}
+.scheduleContainer .Scheduletable {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.scheduleContainer .Scheduletable .addCard {
+  align-items: center;
+  justify-content: center !important;
+  cursor: pointer;
+}
+.scheduleContainer .Scheduletable .card {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  background-color: #fff;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 140px;
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+  padding: 10px;
+}
+.scheduleContainer .Scheduletable .card p {
+  margin: 0;
+}
+.scheduleContainer .Scheduletable .card p:nth-child(2) {
+  font-size: 1em;
+  font-weight: 600;
+}
+.scheduleContainer .Scheduletable .card div {
+  font-size: 1em;
+  font-weight: 600;
+  color: gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.scheduleContainer .Scheduletable .card div p {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .scheduleContainer .Scheduletable {
+    margin-bottom: 71px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .scheduleContainer .Scheduletable .card {
+    width: 90%;
+    height: 150px;
+    transition: all 0.2s ease-in-out;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .scheduleContainer .Scheduletable .card p {
+    margin: 0;
+  }
+  .scheduleContainer .Scheduletable .card p:nth-child(2) {
+    font-size: 1em;
+    font-weight: 600;
+  }
+  .scheduleContainer .Scheduletable .card div {
+    font-size: 1em;
+    font-weight: 600;
+    color: gray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .scheduleContainer .Scheduletable .card div p {
+    font-size: 1.5em;
+    font-weight: 600;
+  }
+}/*# sourceMappingURL=scheduledClasses.css.map */

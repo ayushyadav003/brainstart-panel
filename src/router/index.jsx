@@ -125,7 +125,11 @@ export default function Router() {
         />
         <Route
           path="/profile"
-          element={<Profile />}
+          element={
+            <TeacherLayout>
+              <Profile />
+            </TeacherLayout>
+          }
         />
       </Routes>
     </BrowserRouter>

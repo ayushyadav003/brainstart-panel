@@ -1,0 +1,21 @@
+.updateNotesContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.updateNotesContainer .indexingWrapper {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0 0 0;
+  padding: 10px;
+  background-color: #fff;
+  width: 50%;
+  margin: auto;
+}
+.updateNotesContainer .editorWrapper {
+  padding: 20px;
+}
+.updateNotesContainer .editorWrapper .editor {
+  background-color: #fff;
+  height: 76vh;
+}/*# sourceMappingURL=updateNotes.css.map */

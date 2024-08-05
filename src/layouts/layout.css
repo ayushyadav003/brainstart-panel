@@ -1,0 +1,88 @@
+.loginContainer {
+  display: flex;
+  text-align: center;
+  background-color: #fff;
+  justify-content: center;
+  height: 100vh;
+}
+.loginContainer .loginInner {
+  background-color: #faf8fd;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  width: 55%;
+  justify-content: center;
+}
+.loginContainer .loginInner img {
+  max-height: 400px;
+}
+
+.dashboardLayout {
+  background-color: #fff;
+  display: flex;
+  overflow: hidden;
+  height: 100vh;
+}
+.dashboardLayout .dashboardBody {
+  position: relative;
+  padding-top: 70px;
+  overflow: auto;
+  width: 100%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .loginContainer {
+    flex-direction: column;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+  .loginContainer .loginInner {
+    background-color: #faf8fd;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+  .loginContainer .loginInner img {
+    max-height: 170px;
+  }
+  .loginContainer .loginForm {
+    padding: 1rem;
+    width: 92%;
+  }
+  .loginContainer .loginForm .inner button {
+    border: 1px solid #dcdcdc;
+    background: #fff;
+    padding: 6px 15px;
+    font-size: 14px;
+    color: gray;
+    cursor: pointer;
+    border-radius: 20px;
+  }
+  .loginContainer .loginForm h2 {
+    margin-top: 1rem;
+  }
+  .loginContainer .loginForm .remember {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .loginContainer .loginForm .loginBtn {
+    margin: 2rem auto;
+  }
+  .dashboardLayout {
+    background-color: #fff;
+    display: flex;
+    overflow: auto;
+    height: 100vh;
+  }
+  .dashboardLayout .dashboardBody {
+    position: static;
+    padding-top: 0;
+    overflow: auto;
+    width: 100%;
+    overflow: auto;
+  }
+}/*# sourceMappingURL=layout.css.map */
