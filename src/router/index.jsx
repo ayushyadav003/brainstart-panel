@@ -46,7 +46,7 @@ export default function Router() {
           path="/scheduled-classes"
           element={
             <TeacherLayout>
-              <ScheduledClass />
+              <ScheduledClass/>
             </TeacherLayout>
           }
         />
