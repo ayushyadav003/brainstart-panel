@@ -17,15 +17,15 @@
   }
 }
 .dashboardLayout {
-  background-color: #fff;
+  background-color: #f8f8f8;
   display: flex;
-  overflow: hidden;
-  height: 100vh;
+  width: 100%;
   .dashboardBody {
     position: relative;
-    padding-top: 70px;
+    padding-top: 50px;
     overflow: auto;
-    width: 100%;
+    width: 86%;
+    height: 100vh;
     overflow: auto;
   }
 }
