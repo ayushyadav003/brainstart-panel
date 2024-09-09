@@ -9,10 +9,12 @@ import { useSelector } from "react-redux";
 import { ApiWithToken } from "../../services/ApiWithToken";
 import { toast } from "react-toastify";
 import NoData from "../../components/noData/NoData";
+import AccessPopup from "../../components/accessPopup/AccessPopup";
 
 export default function Teachers() {
   const [addTeacher, setAddTeacher] = useState(false);
   const [allTeachers, setAllTeachers] = useState([]);
+  const [addAccess, setAddAccess] = useState(true);
   const [filter, setFilter] = useState({
     search: "",
     class: null,
@@ -85,6 +87,10 @@ export default function Teachers() {
     }
   };
 
+  const handleOpenAccess = () => {
+    setAddAccess(true);
+  };
+
   useEffect(() => {
     if (currentUser?._id) {
       getAllTeacher();
@@ -119,9 +125,11 @@ export default function Teachers() {
           rows={allTeachers}
           type="teachers"
           onDelete={handleDeteleStudent}
+          onAccess={handleOpenAccess}
         />
         {allTeachers?.length <= 0 && <NoData />}
       </div>
+      <AccessPopup open={addAccess} setOpen={setAddAccess} />
     </div>
   );
 }

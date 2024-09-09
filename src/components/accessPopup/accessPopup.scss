@@ -1,0 +1,47 @@
+.accessPopupWrapper {
+  padding: 1rem;
+  .inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+
+    h3 {
+      margin: 5px 0;
+    }
+  }
+  .tableContainer {
+    table {
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px,
+        rgba(0, 0, 0, 0.24) 0px 1px 2px;
+      border: 1px solid #f8f8f8 !important;
+      border-collapse: separate; /* Ensure border-spacing works */
+      border-spacing: 0 8px; /* Add margin between rows */
+      width: 100%; /* Make the table take full width */
+    }
+    .MuiTableRow-root:nth-child(even) {
+      background-color: #fff;
+    }
+
+    .MuiTableRow-root:nth-child(odd) {
+      background-color: #f8f8f8;
+    }
+    th {
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 5px;
+      text-align: center;
+      border: none; /* Remove border */
+    }
+
+    td {
+      text-align: center;
+      border-radius: 10px;
+      border: none; /* Remove border from table cells */
+      font-weight: normal; /* Make header bold */
+      padding: 8px 12px; /* Add padding to table cells */
+    }
+  }
+}
