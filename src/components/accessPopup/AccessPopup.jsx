@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import "./accessPopup.scss";
 import { accessData } from "../../utils/Utils";
+import { Close } from "@mui/icons-material";
 
 export default function AccessPopup({ open, setOpen }) {
   const [classes, setClasses] = useState([]);
@@ -21,6 +22,10 @@ export default function AccessPopup({ open, setOpen }) {
   return (
     <Dialog open={open} maxWidth={false}>
       <div className="accessPopupWrapper">
+        <h2>
+          Assign rights <Close onClick={() => setOpen(false)} />
+        </h2>
+
         <div className="inner">
           <Autocomplete
             multiple

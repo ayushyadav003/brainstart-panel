@@ -13,7 +13,7 @@ import FormControl from "@mui/material/FormControl";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import "./table.scss";
 import { Block, Delete, Edit } from "@mui/icons-material";
-import { Tooltip } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 
 export default function CommonTable({ head, rows, type, onEdit, onDelete }) {
   console.log(rows);
@@ -109,7 +109,7 @@ export default function CommonTable({ head, rows, type, onEdit, onDelete }) {
                       }}
                     >
                       <span className="icon">
-                        <Edit fontSize="small" onClick={onEdit} />
+                        <Edit fontSize="small" onClick={() => onEdit(row)} />
                       </span>
                       <span className="icon">
                         <Delete

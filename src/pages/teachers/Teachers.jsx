@@ -10,17 +10,19 @@ import { ApiWithToken } from "../../services/ApiWithToken";
 import { toast } from "react-toastify";
 import NoData from "../../components/noData/NoData";
 import AccessPopup from "../../components/accessPopup/AccessPopup";
+import { useNavigate } from "react-router-dom";
 
 export default function Teachers() {
   const [addTeacher, setAddTeacher] = useState(false);
   const [allTeachers, setAllTeachers] = useState([]);
-  const [addAccess, setAddAccess] = useState(true);
+  const [addAccess, setAddAccess] = useState(false);
   const [filter, setFilter] = useState({
     search: "",
     class: null,
     batch: null,
   });
   const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const header = ["Sno.", "Name", "Email", "Phone", "Class", "Batch"];
 
@@ -91,6 +93,11 @@ export default function Teachers() {
     setAddAccess(true);
   };
 
+  const handleEdit = (data) => {
+    console.log(data);
+    navigate(`/teacher/${data?.fullName}`);
+  };
+
   useEffect(() => {
     if (currentUser?._id) {
       getAllTeacher();
@@ -105,15 +112,7 @@ export default function Teachers() {
         setOpen={setAddTeacher}
         onSubmit={(data) => addNewTeacher(data)}
       />
-      <Filter
-        showBack={false}
-        heading="All Teachers"
-        type="Teachers"
-        showClass={true}
-        showBatch={true}
-        filter={filter}
-        setFilter={setFilter}
-      />
+
       <div id="addTeacher">
         <Button variant="contained" onClick={() => setAddTeacher(true)}>
           Add New Teacher
@@ -126,6 +125,7 @@ export default function Teachers() {
           type="teachers"
           onDelete={handleDeteleStudent}
           onAccess={handleOpenAccess}
+          onEdit={handleEdit}
         />
         {allTeachers?.length <= 0 && <NoData />}
       </div>
