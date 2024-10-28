@@ -44,15 +44,6 @@ export default function ScheduledClass() {
   }, [currentUser]);
   return (
     <div className="scheduleContainer">
-      <Filter
-        type="schedule"
-        heading="Classes Scheduled"
-        showBack={false}
-        showClass={true}
-        showBatch={true}
-        filter={filter}
-        setFilter={setFilter}
-      />
       <div className="Scheduletable">
         <div className="card addCard" onClick={() => setAddMeeting(true)}>
           <Add fontSize="large" />

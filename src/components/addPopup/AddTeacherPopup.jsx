@@ -23,14 +23,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 
-export default function AddPopup({
-  type,
-  open,
-  setOpen,
-  onSubmit,
-  handleWriteNotes,
-  handleUploadNotes,
-}) {
+export default function AddPopup({ open, setOpen, onSubmit }) {
   const { register, handleSubmit, reset, setValue } = useForm();
   const [loading, setLoading] = useState(false);
   const { currentUser } = useSelector((state) => state.user);

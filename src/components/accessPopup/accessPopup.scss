@@ -5,12 +5,21 @@
     align-items: center;
     gap: 1rem;
     width: 100%;
-
     h3 {
       margin: 5px 0;
     }
   }
+  h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 2rem 0;
+    svg {
+      cursor: pointer;
+    }
+  }
   .tableContainer {
+    margin: 1rem 0;
     table {
       box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px,
         rgba(0, 0, 0, 0.24) 0px 1px 2px;
@@ -28,10 +37,11 @@
     }
     th {
       max-width: 120px;
+      font-size: 13px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      padding: 5px;
+      padding: 0px;
       text-align: center;
       border: none; /* Remove border */
     }
